@@ -1,0 +1,70 @@
+﻿@*<div class="top-row pl-4 navbar navbar-dark">
+        <a class="navbar-brand" href="">Operario</a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <ul class="nav flex-column">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="operario/create">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Cargar Operarios
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="operario/list">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Lista Operarios
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+
+    @code {
+        private bool collapseNavMenu = true;
+
+        private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+        private void ToggleNavMenu()
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
+    }*@
+
+<ul class="nav flex-row">
+    <li class="nav-item">
+        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <span aria-hidden="true"></span>Home
+        </NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="operario/list">
+            <span aria-hidden="true"></span>Lista Operarios
+        </NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="/operacionesstock">
+            <span aria-hidden="true"></span>Operaciones de Stock
+        </NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="servicio/list">
+            <span aria-hidden="true"></span>Módulo Servicios
+        </NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="Prod/list">
+            <span aria-hidden="true"></span>Lista productos
+        </NavLink>
+    </li>
+</ul>

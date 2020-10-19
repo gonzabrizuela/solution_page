@@ -1,0 +1,151 @@
+﻿@page "/servicio/list"
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using System.Configuration;
+@using System.Data.SqlClient;
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.BarcodeGenerator
+@using System.Text.Json
+@using System.Linq
+@inject IJSRuntime JsRuntime
+@using Servicio.Shared.Models
+@using Servicio.Extensions
+@using System.Net.Http.Json
+@inject CustomHttpClient Http
+@using Servicio
+@inject NavigationManager NavManager
+@inherits Servicio.Pages.Servicios.ServicioPageBase
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfGrid AllowReordering="true" ShowColumnChooser="true" ShowColumnMenu="true" AllowResizing="true" EnablePersistence="true"
+                    @ref="Grid" DataSource="@servicios" AllowExcelExport="true" AllowRowDragAndDrop="true" AllowGrouping="true"
+                    AllowSorting="true" AllowPaging="true" AllowFiltering="true" Toolbar="@Toolbaritems">
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                <GridEvents OnToolbarClick="@ClickHandler" OnActionBegin="ActionBegin" TValue="Service"></GridEvents>
+                <GridFilterSettings Type="@Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Dialog">
+                    <Template>
+                        @{
+                                var servicio = (context as Service);
+                                <div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="e-float-text e-label-top">Pedido:</label>
+                                            <SfNumericTextBox ID="PEDIDO" @bind-Value="@(servicio.PEDIDO)" Enabled="@Disabled"></SfNumericTextBox>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="e-float-text e-label-top">Articulo:</label>
+                                            <SfTextBox CssClass="customClass" ID="DESCARTICULO" @bind-Value="@(servicio.DESCARTICULO)"></SfTextBox>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                    </Template>
+                </GridEditSettings>
+
+                <GridColumns>
+                    @*<GridColumn Field=@nameof(Service.PEDIDO) HeaderText="Pedido" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FECHA) HeaderText="Fecha" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CLIENTE) HeaderText="Cliente" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PLANTA) HeaderText="Planta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.OCOMPRA) HeaderText="Orden de Compra" TextAlign="TextAlign.Left" Type="ColumnType.Date"Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REMITOREC) HeaderText="Remito Recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REMITO) HeaderText="Remito" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.IDENTIFICACION) HeaderText="Identificacion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.NSERIE) HeaderText="Numero de Serie" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MARCA) HeaderText="Marca" DisplayAsCheckBox="true" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MODELO) HeaderText="Modelo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MEDIDA) HeaderText="Medida" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SERIE) HeaderText="Serie" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ORIFICIO) HeaderText="Orificio" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.AREA) HeaderText="Area" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FLUIDO) HeaderText="Fluido" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.AÑO) HeaderText="Año" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESION) HeaderText="Presion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TEMP) HeaderText="Tempertatura" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONBANCO) HeaderText="Presion de Banco" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SOBREPRESION) HeaderText="SobrePresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CONTRAPRESION) HeaderText="ContraPresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TIPO) HeaderText="Tipo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESORTE) HeaderText="Resorte" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SERVICIO) HeaderText="Servicio" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ENSRECEP) HeaderText="Ensayo recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ESTADO) HeaderText="Estado" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONRECEP) HeaderText="Presion Recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FUGAS) HeaderText="Fugas" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONFUGA) HeaderText="Presion de Fuga" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CAMBIOPRESION) HeaderText="Cambio de Presion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONSOLIC) HeaderText="Presion Solicitada" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CAMBIOREPUESTO) HeaderText="Cambio Repuesto" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CODRESORTE) HeaderText="Codigo de Resorte" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REPUESTOS) HeaderText="Repuestos" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TRABAJOSEFEC) HeaderText="Trabajos Efectuados" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TRABAJOSACCES) HeaderText="Trabajos Accesorios" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MANOMETRO) HeaderText="Manometro" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FECMANTANT) HeaderText="Fecha Mantenimiento Anterior" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PEDIDOANT) HeaderText="Pedido Anterior" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ENSAYOCONTRAP) HeaderText="Ensayo Contrapresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESP) HeaderText="Responsable" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CONTROLO) HeaderText="Controlo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.POP) HeaderText="POP" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESPTECNICO) HeaderText="Responsable Tecnico" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.OPDS) HeaderText="OPDS" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ACTA) HeaderText="Acta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESENCIAINSPEC) HeaderText="Presencia Inspector" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="TextAlign.Left" Width="200"></GridColumn>*@
+                    <GridColumn Field=@nameof(Service.OBSERV) HeaderText="Observaciones" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group.col-md-6 {
+        width: 200px;
+    }
+
+    label.e-float-text {
+        position: relative;
+        padding-left: 0;
+        top: 10%;
+    }
+
+    .e-input-group.e-control-wrapper.customClass {
+        color: black;
+        background-color: lightblue;
+    }
+</style>
+
+@*<SfQRCodeGenerator Width="200px" Height="150px" Value="http://www.aerre.com.ar/">
+        <QRCodeGeneratorDisplayText text=" "></QRCodeGeneratorDisplayText>
+    </SfQRCodeGenerator>*@
+<style>
+    #target {
+        height: 500px;
+    }
+</style>
+@code {
+    private bool Visibility { get; set; } = true;
+    private bool ShowButton { get; set; } = false;
+    private void DialogOpen(Object args)
+    {
+        this.ShowButton = false;
+    }
+    private void DialogClose(Object args)
+    {
+        this.ShowButton = true;
+    }
+    private void OnClicked()
+    {
+        this.Visibility = true;
+    }
+}
