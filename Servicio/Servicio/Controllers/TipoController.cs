@@ -21,11 +21,18 @@ namespace Servicio.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Tipo
+        //// GET: api/Tipo
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Tipo>>> GetTipo()
+        //{
+        //    return await _context.Tipo.ToListAsync();
+        //}
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tipo>>> GetTipo()
+        public IEnumerable<Tipo> Get()
         {
-            return await _context.Tipo.ToListAsync();
+            var xitem = _context.Tipo.ToList();
+            return xitem;
         }
 
         // GET: api/Tipo/5

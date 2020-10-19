@@ -21,11 +21,18 @@ namespace Servicio.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Trabajosefec
+        //// GET: api/Trabajosefec
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Trabajosefec>>> GetTrabajosefec()
+        //{
+        //    return await _context.Trabajosefec.ToListAsync();
+        //}
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trabajosefec>>> GetTrabajosefec()
+        public IEnumerable<Trabajosefec> Get()
         {
-            return await _context.Trabajosefec.ToListAsync();
+            var xitem = _context.Trabajosefec.ToList();
+            return xitem;
         }
 
         // GET: api/Trabajosefec/5

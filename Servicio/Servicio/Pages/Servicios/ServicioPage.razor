@@ -53,7 +53,7 @@
                 </GridEditSettings>
 
                 <GridColumns>
-                    @*<GridColumn Field=@nameof(Service.PEDIDO) HeaderText="Pedido" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PEDIDO) HeaderText="Pedido" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.FECHA) HeaderText="Fecha" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.CLIENTE) HeaderText="Cliente" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.PLANTA) HeaderText="Planta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
@@ -101,7 +101,7 @@
                     <GridColumn Field=@nameof(Service.OPDS) HeaderText="OPDS" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.ACTA) HeaderText="Acta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.PRESENCIAINSPEC) HeaderText="Presencia Inspector" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="TextAlign.Left" Width="200"></GridColumn>*@
+                    <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.OBSERV) HeaderText="Observaciones" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                 </GridColumns>
             </SfGrid>
@@ -134,18 +134,4 @@
     }
 </style>
 @code {
-    private bool Visibility { get; set; } = true;
-    private bool ShowButton { get; set; } = false;
-    private void DialogOpen(Object args)
-    {
-        this.ShowButton = false;
-    }
-    private void DialogClose(Object args)
-    {
-        this.ShowButton = true;
-    }
-    private void OnClicked()
-    {
-        this.Visibility = true;
-    }
 }

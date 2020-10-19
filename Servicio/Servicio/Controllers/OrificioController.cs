@@ -21,11 +21,18 @@ namespace Servicio.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Orificio
+        //// GET: api/Orificio
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Orificio>>> GetOrificio()
+        //{
+        //    return await _context.Orificio.ToListAsync();
+        //}
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Orificio>>> GetOrificio()
+        public IEnumerable<Orificio> Get()
         {
-            return await _context.Orificio.ToListAsync();
+            var xitem = _context.Orificio.ToList();
+            return xitem;
         }
 
         // GET: api/Orificio/5

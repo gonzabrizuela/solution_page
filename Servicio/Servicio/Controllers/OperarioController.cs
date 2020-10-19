@@ -21,11 +21,17 @@ namespace Servicio.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Operario
+        //// GET: api/Operario
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Operario>>> GetOperario()
+        //{
+        //    return await _context.Operario.ToListAsync();
+        //}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Operario>>> GetOperario()
+        public IEnumerable<Operario> Get()
         {
-            return await _context.Operario.ToListAsync();
+            var xitem = _context.Operario.ToList();
+            return xitem;
         }
 
         // GET: api/Operario/5

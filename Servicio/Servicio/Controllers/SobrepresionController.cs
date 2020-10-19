@@ -21,11 +21,18 @@ namespace Servicio.Server.Controllers
             _context = context;
         }
 
-        // GET: api/Sobrepresion
+        //// GET: api/Sobrepresion
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Sobrepresion>>> GetSobrepresion()
+        //{
+        //    return await _context.Sobrepresion.ToListAsync();
+        //}
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sobrepresion>>> GetSobrepresion()
+        public IEnumerable<Sobrepresion> Get()
         {
-            return await _context.Sobrepresion.ToListAsync();
+            var xitem = _context.Sobrepresion.ToList();
+            return xitem;
         }
 
         // GET: api/Sobrepresion/5
