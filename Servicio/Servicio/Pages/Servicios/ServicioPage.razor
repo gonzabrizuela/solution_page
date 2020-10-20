@@ -51,6 +51,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-TrEfec" role="tab" aria-controls="pills-contact" aria-selected="false">Trabajos Efectuados</a>
                                 </li>
+
+                                  <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-contact" aria-selected="false">Catálogos</a>
+                                </li>
+
                             </ul>
 
 
@@ -412,6 +417,17 @@
 
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="pills-file" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <div>
+                                        <div ID="DropArea">
+                                            Drop files here to upload
+                                        </div>
+                                        <SfUploader ID="UploadFiles" AutoUpload=false DropArea="#DropArea">
+                                            <UploaderAsyncSettings SaveUrl="api/SampleData/Save" RemoveUrl="api/SampleData/Remove"></UploaderAsyncSettings>
+                                        </SfUploader>
+
+                                    </div>
+                                </div>
                             </div>
                         }
 
@@ -491,6 +507,32 @@
         background-color: lightblue;
     }
 </style>
+<style>
+    #DropArea {
+        padding: 50px 25px;
+        margin: 30px auto;
+        border: 1px solid #c3c3c3;
+        text-align: center;
+        width: 20%;
+        display: inline-flex;
+    }
+
+    .e-file-select,
+    .e-file-drop {
+        display: none;
+    }
+
+    body .e-upload-drag-hover {
+        outline: 2px dashed brown;
+    }
+
+    #uploadfile {
+        width: 60%;
+        display: inline-flex;
+        margin-left: 5%;
+    }
+</style>
+
 
 @*<SfQRCodeGenerator Width="200px" Height="150px" Value="http://www.aerre.com.ar/">
         <QRCodeGeneratorDisplayText text=" "></QRCodeGeneratorDisplayText>
