@@ -110,7 +110,7 @@ namespace Servicio.Server.Controllers
 
         // DELETE: api/Servicios/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Service>> DeleteServicios(int id)
+        public async Task<ActionResult<Service>> DeleteServicios(string id)
         {
             var Servicios = await _context.Servicios.FindAsync(id);
             if (Servicios == null)
