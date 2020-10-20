@@ -110,5 +110,7 @@ namespace Servicio.Shared.Models
         public string DESCARTICULO { get; set; } = "";
         [ColumnaGridViewAtributo(Name = "Observaciones")]
         public string OBSERV { get; set; } = "";
+        [ColumnaGridViewAtributo(Name = "Catalogo")]
+        public string CATALOGO { get; set; } = "";
     }
 }
