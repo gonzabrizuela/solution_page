@@ -1,0 +1,210 @@
+﻿@page "/operario/list"
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using System.Configuration;
+@using System.Data.SqlClient;
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.BarcodeGenerator
+@using System.Text.Json
+@using System.Linq
+@inject IJSRuntime JsRuntime
+@using Servicio.Shared.Models
+@using Servicio.Extensions
+@using System.Net.Http.Json
+@inject CustomHttpClient Http
+@using Servicio
+@inject NavigationManager NavManager
+@inherits Servicio.Pages.Operarios.OperarioPageBase
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <SfGrid AllowReordering="true" ShowColumnChooser="true" ShowColumnMenu="true" AllowResizing="true" EnablePersistence="true"
+                    @ref="Grid" DataSource="@operarios" AllowExcelExport="true" AllowRowDragAndDrop="true" AllowGrouping="true"
+                    AllowSorting="true" AllowPaging="true" AllowFiltering="true" Toolbar="@Toolbaritems">
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                <GridEvents OnToolbarClick="@ClickHandler" OnActionBegin="ActionBegin" TValue="Operario"></GridEvents>
+                <GridFilterSettings Type="@Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Dialog">
+                    <Template>
+                        @{
+                            var oper = (context as Operario);
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-Generalidades" role="tab" aria-controls="pills-home" aria-selected="true">Modelos</a>
+                                </li>                       
+
+                            </ul>
+
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-Generalidades" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">CÓDIGO DE OPERARIO:</label>
+                                                <SfNumericTextBox ID="CG_OPER" @bind-Value="@(oper.CG_OPER)" Enabled="@Disabled"></SfNumericTextBox>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Descripción operario:</label>
+                                                <SfTextBox ID="DES_OPER" @bind-Value="@(oper.DES_OPER)"></SfTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">CÓDIGO DE TURNO:</label>
+                                                <SfNumericTextBox ID="CG_TURNO" @bind-Value="@(oper.CG_TURNO)"></SfNumericTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">RENDIMIENTO:</label>
+                                                <SfNumericTextBox ID="RENDIM" @bind-Value="@(oper.RENDIM)"></SfNumericTextBox>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">FECHA FINAL:</label>
+                                                
+                                                <SfDateTimePicker ID="FEFINAL" @bind-Value="@(oper.FE_FINAL)"></SfDateTimePicker>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">HS_FINAL:</label>
+                                                <SfNumericTextBox ID="HS_FINAL" @bind-Value="@(oper.HS_FINAL)"></SfNumericTextBox>
+                                            </div>
+                                        </div>
+                                 
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">CG_CATEOP:</label>
+                                                <SfTextBox ID="CG_CATEOP" @bind-Value="@(oper.CG_CATEOP)"></SfTextBox>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">VALOR_HORA:</label>
+                                                    <SfNumericTextBox ID="VALOR_HORA" @bind-Value="@(oper.VALOR_HORA)"></SfNumericTextBox>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="e-float-text e-label-top">MONEDA:</label>
+                                                        <SfTextBox ID="MONEDA" @bind-Value="@(oper.MONEDA)"></SfTextBox>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="e-float-text e-label-top">ACTIVO:</label>
+                                                        <SfNumericTextBox ID="ACTIVO" @bind-Value="@(oper.ACTIVO)"></SfNumericTextBox>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="e-float-text e-label-top">CG_CIA:</label>
+                                                        <SfNumericTextBox ID="CG_CIA" @bind-Value="@(oper.CG_CIA)"></SfNumericTextBox>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="e-float-text e-label-top">USUARIO:</label>
+                                                        <SfTextBox ID="USUARIO" @bind-Value="@(oper.USUARIO)"></SfTextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                              
+  
+                            </div>
+                        }
+
+                    </Template>
+                </GridEditSettings>
+
+                <GridColumns>
+                    <GridColumn Field=@nameof(Operario.CG_OPER) HeaderText="CG_OPER" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
+
+                    <GridColumn Field=@nameof(Operario.DES_OPER) HeaderText="DES_OPER" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.CG_TURNO) HeaderText="CG_TURNO" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.RENDIM) HeaderText="RENDIM" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.FE_FINAL) HeaderText="FE_FINAL" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.HS_FINAL) HeaderText="HS_FINAL" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.CG_CATEOP) HeaderText="CG_CATEOP" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.VALOR_HORA) HeaderText="VALOR_HORA" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.MONEDA) HeaderText="MONEDA" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.ACTIVO) HeaderText="ACTIVO" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.CG_CIA) HeaderText="CG_CIA" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Operario.USUARIO) HeaderText="USUARIO" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </div>
+</div>
+<style>
+    .form-group.col-md-6 {
+        width: 200px;
+    }
+
+    label.e-float-text {
+        position: relative;
+        padding-left: 0;
+        top: 10%;
+    }
+
+    .e-input-group.e-control-wrapper.customClass {
+        color: black;
+        background-color: lightblue;
+    }
+</style>
+<style>
+    #DropArea {
+        padding: 50px 25px;
+        margin: 30px auto;
+        border: 1px solid #c3c3c3;
+        text-align: center;
+        width: 20%;
+        display: inline-flex;
+    }
+
+    .e-file-select,
+    .e-file-drop {
+        display: none;
+    }
+
+    body .e-upload-drag-hover {
+        outline: 2px dashed brown;
+    }
+
+    #uploadfile {
+        width: 60%;
+        display: inline-flex;
+        margin-left: 5%;
+    }
+</style>
+
+
+@*<SfQRCodeGenerator Width="200px" Height="150px" Value="http://www.aerre.com.ar/">
+        <QRCodeGeneratorDisplayText text=" "></QRCodeGeneratorDisplayText>
+    </SfQRCodeGenerator>*@
+<style>
+    #target {
+        height: 500px;
+    }
+</style>
+@code {
+}
