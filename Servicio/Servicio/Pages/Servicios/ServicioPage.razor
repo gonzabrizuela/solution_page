@@ -45,19 +45,18 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EnsRecepcion" role="tab" aria-controls="pills-contact" aria-selected="false">Ensayos a la recepcion</a>
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EnsRecepcion" role="tab" aria-controls="pills-contact" aria-selected="false">Ensayos a la Recepcion</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-TrEfec" role="tab" aria-controls="pills-contact" aria-selected="false">Trabajos Efectuados</a>
                                 </li>
 
-                                  <li class="nav-item">
-                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-contact" aria-selected="false">Catálogos</a>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-file" role="tab" aria-controls="pills-contact" aria-selected="false">Catálogo</a>
                                 </li>
 
                             </ul>
-
 
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-Generalidades" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -101,20 +100,8 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Remito:</label>
-                                                <SfTextBox ID="REMITO" @bind-Value="@(servicio.REMITO)" Enabled="@Disabled"></SfTextBox>
-                                            </div>
-
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Fecha de mantenimiento anterior:</label>
-                                                <SfTextBox ID="FECMANTANT" @bind-Value="@(servicio.FECMANTANT)"></SfTextBox>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Pedido anterior:</label>
-                                                <SfTextBox ID="PEDIDOANT" @bind-Value="@(servicio.PEDIDOANT)"></SfTextBox>
+                                                <label class="e-float-text e-label-top">Observaciones:</label>
+                                                <SfTextBox ID="OBSERV" @bind-Value="@(servicio.OBSERV)" Enabled="@Disabled"></SfTextBox>
                                             </div>
 
                                             <div class="form-group col-md-6">
@@ -125,23 +112,31 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Observaciones:</label>
-                                                <SfTextBox ID="OBSERV" @bind-Value="@(servicio.OBSERV)" Enabled="@Disabled"></SfTextBox>
+                                                <label class="e-float-text e-label-top">Pedido anterior:</label>
+                                                <SfTextBox ID="PEDIDOANT" @bind-Value="@(servicio.PEDIDOANT)"></SfTextBox>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Fecha de mantenimiento anterior:</label>
+                                                <SfTextBox ID="FECMANTANT" @bind-Value="@(servicio.FECMANTANT)"></SfTextBox>
                                             </div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Remito:</label>
+                                                <SfTextBox ID="REMITO" @bind-Value="@(servicio.REMITO)" Enabled="@Disabled"></SfTextBox>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="tab-pane fade" id="pills-DatosPlaca" role="tabpanel" aria-labelledby="pills-profile-tab">
                                     <div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Identificacion:</label>
+                                                <label class="e-float-text e-label-top">TAG:</label>
                                                 <SfTextBox ID="IDENTIFICACION" @bind-Value="@(servicio.IDENTIFICACION)"></SfTextBox>
                                             </div>
 
@@ -193,7 +188,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Año:</label>
-                                                <SfTextBox ID="AÑO" @bind-Value="@(servicio.AÑO)" Enabled="@Disabled"></SfTextBox>
+                                                <SfTextBox ID="AÑO" @bind-Value="@(servicio.AÑO)"></SfTextBox>
                                             </div>
                                         </div>
 
@@ -263,16 +258,20 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="tab-pane fade" id="pills-EnsRecepcion" role="tabpanel" aria-labelledby="pills-contact-tab">
                                     <div>
 
                                         <div class="form-row">
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Ensayo a la Recepcion:</label>
+                                                    <SfTextBox ID="ENSRECEP" @bind-Value="@(servicio.ENSRECEP)"></SfTextBox>
+                                                </div>*@
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Ensayo a la Recepcion:</label>
-                                                <SfTextBox ID="ENSRECEP" @bind-Value="@(servicio.ENSRECEP)"></SfTextBox>
+                                                <SfDropDownList CssClass="customClass" ID="ENSRECEP" TItem="SIoNO" @bind-Value="@(servicio.ENSRECEP)" TValue="string" Placeholder="Hubo Ensayo a la Recepcion?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
 
                                             <div class="form-group col-md-6">
@@ -289,9 +288,16 @@
                                                 <SfTextBox ID="PRESIONRECEP" @bind-Value="@(servicio.PRESIONRECEP)"></SfTextBox>
                                             </div>
 
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Fugas:</label>
+                                                    <SfTextBox ID="FUGAS" @bind-Value="@(servicio.FUGAS)"></SfTextBox>
+                                                </div>*@
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Fugas:</label>
-                                                <SfTextBox ID="FUGAS" @bind-Value="@(servicio.FUGAS)"></SfTextBox>
+                                                <SfDropDownList CssClass="customClass" ID="FUGAS" TItem="SIoNO" @bind-Value="@(servicio.FUGAS)" TValue="string" Placeholder="Hubo fugas?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
                                         </div>
 
@@ -301,9 +307,16 @@
                                                 <SfTextBox ID="PRESIONFUGA" @bind-Value="@(servicio.PRESIONFUGA)"></SfTextBox>
                                             </div>
 
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Cambio de Presión:</label>
+                                                    <SfTextBox ID="CAMBIOPRESION" @bind-Value="@(servicio.CAMBIOPRESION)"></SfTextBox>
+                                                </div>*@
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Cambio de Presión:</label>
-                                                <SfTextBox ID="CAMBIOPRESION" @bind-Value="@(servicio.CAMBIOPRESION)"></SfTextBox>
+                                                <SfDropDownList CssClass="customClass" ID="CAMBIOPRESION" TItem="SIoNO" @bind-Value="@(servicio.CAMBIOPRESION)" TValue="string" Placeholder="Hubo Cambio de Presión?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
                                         </div>
 
@@ -313,20 +326,22 @@
                                                 <SfTextBox ID="PRESIONSOLIC" @bind-Value="@(servicio.PRESIONSOLIC)"></SfTextBox>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="tab-pane fade" id="pills-TrEfec" role="tabpanel" aria-labelledby="pills-profile-tab">
                                     <div>
-
                                         <div class="form-row">
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Cambio de Repuesto:</label>
+                                                    <SfTextBox ID="CAMBIOREPUESTO" @bind-Value="@(servicio.CAMBIOREPUESTO)"></SfTextBox>
+                                                </div>*@
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Cambio de Repuesto:</label>
-                                                <SfTextBox ID="CAMBIOREPUESTO" @bind-Value="@(servicio.CAMBIOREPUESTO)"></SfTextBox>
+                                                <SfDropDownList CssClass="customClass" ID="CAMBIOREPUESTO" TItem="SIoNO" @bind-Value="@(servicio.CAMBIOREPUESTO)" TValue="string" Placeholder="Hubo Cambio de Repuesto?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
 
                                             <div class="form-group col-md-6">
@@ -337,13 +352,20 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Codigo de Resorte:</label>
+                                                <label class="e-float-text e-label-top">Codigo de nuevo Resorte:</label>
                                                 <SfTextBox ID="CODRESORTE" @bind-Value="@(servicio.CODRESORTE)"></SfTextBox>
                                             </div>
 
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Ensayo Contrapresion:</label>
+                                                    <SfTextBox ID="ENSAYOCONTRAP" @bind-Value="@(servicio.ENSAYOCONTRAP)"></SfTextBox>
+                                                </div>*@
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Ensayo Contrapresion:</label>
-                                                <SfTextBox ID="ENSAYOCONTRAP" @bind-Value="@(servicio.ENSAYOCONTRAP)"></SfTextBox>
+                                                <SfDropDownList CssClass="customClass" ID="ENSAYOCONTRAP" TItem="SIoNO" @bind-Value="@(servicio.ENSAYOCONTRAP)" TValue="string" Placeholder="Hubo Ensayo de Contrapresión?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
                                         </div>
 
@@ -363,55 +385,71 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Ensayo de Contrapresion:</label>
-                                                <SfTextBox ID="ENSAYOCONTRAP" @bind-Value="@(servicio.ENSAYOCONTRAP)"></SfTextBox>
-                                            </div>
-
-                                            <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Responsable:</label>
                                                 <SfDropDownList CssClass="customClass" ID="RESP" TItem="Operario" @bind-Value="@(servicio.RESP)" TValue="string" Placeholder="Responsable" DataSource="@operarios">
                                                     <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
-                                        </div>
 
-                                        <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Controló:</label>
                                                 <SfDropDownList CssClass="customClass" ID="CONTROLO" TItem="Operario" @bind-Value="@(servicio.CONTROLO)" TValue="string" Placeholder="Controló" DataSource="@operarios">
                                                     <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">POP:</label>
-                                                <SfTextBox ID="POP" @bind-Value="@(servicio.POP)"></SfTextBox>
-                                            </div>
                                         </div>
 
                                         <div class="form-row">
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">POP:</label>
+                                                    <SfTextBox ID="POP" @bind-Value="@(servicio.POP)"></SfTextBox>
+                                                </div>*@
+
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">POP:</label>
+                                                <SfDropDownList CssClass="customClass" ID="POP" TItem="SIoNO" @bind-Value="@(servicio.POP)" TValue="string" Placeholder="POP" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
+                                            </div>
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Responsable Técnico:</label>
                                                 <SfDropDownList CssClass="customClass" ID="RESPTECNICO" TItem="Operario" @bind-Value="@(servicio.RESPTECNICO)" TValue="string" Placeholder="Responsable Técnico" DataSource="@operarios">
                                                     <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">OPDS:</label>
-                                                <SfTextBox ID="OPDS" @bind-Value="@(servicio.OPDS)"></SfTextBox>
-                                            </div>
                                         </div>
 
                                         <div class="form-row">
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">OPDS:</label>
+                                                    <SfTextBox ID="OPDS" @bind-Value="@(servicio.OPDS)"></SfTextBox>
+                                                </div>*@
+
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">OPDS:</label>
+                                                <SfDropDownList CssClass="customClass" ID="OPDS" TItem="SIoNO" @bind-Value="@(servicio.OPDS)" TValue="string" Placeholder="OPDS" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
+                                            </div>
+
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Acta:</label>
                                                 <SfTextBox ID="ACTA" @bind-Value="@(servicio.ACTA)"></SfTextBox>
                                             </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            @*<div class="form-group col-md-6">
+                                                    <label class="e-float-text e-label-top">Presencia inspector:</label>
+                                                    <SfTextBox ID="PRESENCIAINSPEC" @bind-Value="@(servicio.PRESENCIAINSPEC)"></SfTextBox>
+                                                </div>*@
 
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Presencia inspector:</label>
-                                                <SfTextBox ID="PRESENCIAINSPEC" @bind-Value="@(servicio.PRESENCIAINSPEC)"></SfTextBox>
+                                                <label class="e-float-text e-label-top">Presencia Inspector:</label>
+                                                <SfDropDownList CssClass="customClass" ID="PRESENCIAINSPEC" TItem="SIoNO" @bind-Value="@(servicio.PRESENCIAINSPEC)" TValue="string" Placeholder="Hubo Presencia de Inspector?" DataSource="@SIoNOData">
+                                                    <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
+                                                </SfDropDownList>
                                             </div>
                                         </div>
 
@@ -425,7 +463,6 @@
                                         <SfUploader ID="UploadFiles" AutoUpload=false DropArea="#DropArea">
                                             <UploaderAsyncSettings SaveUrl="api/SampleData/Save" RemoveUrl="api/SampleData/Remove"></UploaderAsyncSettings>
                                         </SfUploader>
-
                                     </div>
                                 </div>
                             </div>

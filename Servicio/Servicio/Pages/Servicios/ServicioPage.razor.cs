@@ -22,6 +22,14 @@ namespace Servicio.Pages.Servicios
         public bool Enabled = true;
         public bool Disabled = false;
 
+        public class SIoNO
+        {
+            public string Text { get; set; }
+        }
+        public List<SIoNO> SIoNOData = new List<SIoNO> {
+            new SIoNO() {Text= "SI"},
+            new SIoNO() {Text= "NO"}};
+
         protected List<Service> servicios = new List<Service>();
         protected List<Modelo> modelos = new List<Modelo>();
         protected List<Medida> medidas = new List<Medida>();
