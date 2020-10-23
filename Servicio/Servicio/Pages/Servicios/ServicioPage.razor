@@ -1,4 +1,5 @@
 ﻿@page "/servicio/list"
+@using Syncfusion.Blazor.FileManager;
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Data
 @using Syncfusion.Blazor.Calendars
@@ -451,18 +452,34 @@
                                                     <DropDownListFieldSettings Value="Text" Text="Text"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
-                                        </div>
 
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Responsable Técnico:</label>
+                                                <SfDropDownList CssClass="customClass" ID="MANOMETRO" TItem="Operario" @bind-Value="@(servicio.MANOMETRO)" TValue="string" Placeholder="Responsable Técnico" DataSource="@operarios">
+                                                    <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
+                                                </SfDropDownList>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-file" role="tabpanel" aria-labelledby="pills-profile-tab">
                                     <div>
-                                        <div ID="DropArea">
-                                            Drop files here to upload
+                                        @*<div ID="DropArea">
+                                                Drop files here to upload
+                                            </div>
+                                            <SfUploader ID="UploadFiles" AutoUpload=false DropArea="#DropArea">
+                                                <UploaderAsyncSettings SaveUrl="api/SampleData/Save" RemoveUrl="api/SampleData/Remove"></UploaderAsyncSettings>
+                                            </SfUploader>*@
+                                        <div class="control_wrapper">
+                                            <SfFileManager>
+
+                                                <FileManagerAjaxSettings Url="/api/SampleData/FileOperations"
+                                                                         DownloadUrl="/api/SampleData/Download">
+                                                </FileManagerAjaxSettings>
+                                                <FileManagerToolbarSettings Visible="@Visible"></FileManagerToolbarSettings>
+                                                <FileManagerNavigationPaneSettings Visible=false></FileManagerNavigationPaneSettings>
+                                            </SfFileManager>
                                         </div>
-                                        <SfUploader ID="UploadFiles" AutoUpload=false DropArea="#DropArea">
-                                            <UploaderAsyncSettings SaveUrl="api/SampleData/Save" RemoveUrl="api/SampleData/Remove"></UploaderAsyncSettings>
-                                        </SfUploader>
                                     </div>
                                 </div>
                             </div>
@@ -472,57 +489,57 @@
                 </GridEditSettings>
 
                 <GridColumns>
-                    <GridColumn Field=@nameof(Service.PEDIDO) HeaderText="Pedido" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.FECHA) HeaderText="Fecha" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CLIENTE) HeaderText="Cliente" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PLANTA) HeaderText="Planta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.OCOMPRA) HeaderText="Orden de Compra" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.REMITOREC) HeaderText="Remito Recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.REMITO) HeaderText="Remito" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.IDENTIFICACION) HeaderText="Identificacion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.NSERIE) HeaderText="Numero de Serie" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.MARCA) HeaderText="Marca" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.MODELO) HeaderText="Modelo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.MEDIDA) HeaderText="Medida" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.SERIE) HeaderText="Serie" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.ORIFICIO) HeaderText="Orificio" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.AREA) HeaderText="Area" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.FLUIDO) HeaderText="Fluido" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.AÑO) HeaderText="Año" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESION) HeaderText="Presion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.TEMP) HeaderText="Tempertatura" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESIONBANCO) HeaderText="Presion de Banco" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.SOBREPRESION) HeaderText="SobrePresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CONTRAPRESION) HeaderText="ContraPresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.TIPO) HeaderText="Tipo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.RESORTE) HeaderText="Resorte" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.SERVICIO) HeaderText="Servicio" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.ENSRECEP) HeaderText="Ensayo recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.ESTADO) HeaderText="Estado" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESIONRECEP) HeaderText="Presion Recepcion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.FUGAS) HeaderText="Fugas" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESIONFUGA) HeaderText="Presion de Fuga" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CAMBIOPRESION) HeaderText="Cambio de Presion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESIONSOLIC) HeaderText="Presion Solicitada" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CAMBIOREPUESTO) HeaderText="Cambio Repuesto" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CODRESORTE) HeaderText="Codigo de Resorte" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.REPUESTOS) HeaderText="Repuestos" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.TRABAJOSEFEC) HeaderText="Trabajos Efectuados" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.TRABAJOSACCES) HeaderText="Trabajos Accesorios" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.MANOMETRO) HeaderText="Manometro" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.FECMANTANT) HeaderText="Fecha Mantenimiento Anterior" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PEDIDOANT) HeaderText="Pedido Anterior" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.ENSAYOCONTRAP) HeaderText="Ensayo Contrapresion" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.RESP) HeaderText="Responsable" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CONTROLO) HeaderText="Controlo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.POP) HeaderText="POP" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.RESPTECNICO) HeaderText="Responsable Tecnico" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.OPDS) HeaderText="OPDS" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.ACTA) HeaderText="Acta" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.PRESENCIAINSPEC) HeaderText="Presencia Inspector" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.OBSERV) HeaderText="Observaciones" TextAlign="TextAlign.Left" Width="200"></GridColumn>
-                    <GridColumn Field=@nameof(Service.CATALOGO) HeaderText="Ver Catalogo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PEDIDO) HeaderText="Pedido" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FECHA) HeaderText="Fecha" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CLIENTE) HeaderText="Cliente" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PLANTA) HeaderText="Planta" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.OCOMPRA) HeaderText="Orden de Compra" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REMITOREC) HeaderText="Remito Recepcion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REMITO) HeaderText="Remito" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.IDENTIFICACION) HeaderText="Identificacion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.NSERIE) HeaderText="Numero de Serie" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MARCA) HeaderText="Marca" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MODELO) HeaderText="Modelo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MEDIDA) HeaderText="Medida" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SERIE) HeaderText="Serie" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ORIFICIO) HeaderText="Orificio" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.AREA) HeaderText="Area" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FLUIDO) HeaderText="Fluido" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.AÑO) HeaderText="Año" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESION) HeaderText="Presion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TEMP) HeaderText="Tempertatura" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONBANCO) HeaderText="Presion de Banco" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SOBREPRESION) HeaderText="SobrePresion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CONTRAPRESION) HeaderText="ContraPresion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TIPO) HeaderText="Tipo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESORTE) HeaderText="Resorte" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.SERVICIO) HeaderText="Servicio" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ENSRECEP) HeaderText="Ensayo recepcion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ESTADO) HeaderText="Estado" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONRECEP) HeaderText="Presion Recepcion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FUGAS) HeaderText="Fugas" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONFUGA) HeaderText="Presion de Fuga" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CAMBIOPRESION) HeaderText="Cambio de Presion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESIONSOLIC) HeaderText="Presion Solicitada" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CAMBIOREPUESTO) HeaderText="Cambio Repuesto" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CODRESORTE) HeaderText="Codigo de Resorte" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.REPUESTOS) HeaderText="Repuestos" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TRABAJOSEFEC) HeaderText="Trabajos Efectuados" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.TRABAJOSACCES) HeaderText="Trabajos Accesorios" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.MANOMETRO) HeaderText="Manometro" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.FECMANTANT) HeaderText="Fecha Mantenimiento Anterior" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PEDIDOANT) HeaderText="Pedido Anterior" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ENSAYOCONTRAP) HeaderText="Ensayo Contrapresion" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESP) HeaderText="Responsable" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CONTROLO) HeaderText="Controlo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.POP) HeaderText="POP" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.RESPTECNICO) HeaderText="Responsable Tecnico" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.OPDS) HeaderText="OPDS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.ACTA) HeaderText="Acta" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.PRESENCIAINSPEC) HeaderText="Presencia Inspector" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.OBSERV) HeaderText="Observaciones" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Service.CATALOGO) HeaderText="Ver Catalogo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
                 </GridColumns>
             </SfGrid>
         </div>

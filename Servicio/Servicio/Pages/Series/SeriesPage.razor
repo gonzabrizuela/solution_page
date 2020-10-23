@@ -34,58 +34,40 @@
                 <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Dialog">
                     <Template>
                         @{
-                            var seri = (context as Serie);
+                            var serie = (context as Serie);
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-Generalidades" role="tab" aria-controls="pills-home" aria-selected="true">Modelos</a>
-                                </li>                       
-
+                                </li>
                             </ul>
-
-
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-Generalidades" role="tabpanel" aria-labelledby="pills-home-tab">
                                     <div>
-
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Pedido:</label>
-                                                <SfNumericTextBox ID="Id" @bind-Value="@(seri.Id)" Enabled="@Disabled"></SfNumericTextBox>
+                                                <label class="e-float-text e-label-top">Id:</label>
+                                                <SfNumericTextBox ID="Id" @bind-Value="@(serie.Id)" Enabled="@Disabled"></SfNumericTextBox>
                                             </div>
-
-
-                                        </div>
-
-
-
-                                        <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Descripción:</label>
-                                                <SfTextBox ID="AREA" @bind-Value="@(seri.Codigo)"></SfTextBox>
+                                                <label class="e-float-text e-label-top">Código:</label>
+                                                <SfTextBox ID="Codigo" @bind-Value="@(serie.Codigo)"></SfTextBox>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Descripción:</label>
-                                                <SfTextBox ID="DESCRIPCION" @bind-Value="@(seri.Medida)"></SfTextBox>
+                                                <label class="e-float-text e-label-top">Medida:</label>
+                                                <SfTextBox ID="Medida" @bind-Value="@(serie.Medida)"></SfTextBox>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
-                              
-  
                             </div>
                         }
-
                     </Template>
                 </GridEditSettings>
-
                 <GridColumns>
-                    <GridColumn Field=@nameof(Serie.Id) HeaderText="ID" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
-
-                    <GridColumn Field=@nameof(Serie.Codigo) HeaderText="Codigo" TextAlign="TextAlign.Left" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Serie.Id) HeaderText="Id" TextAlign="TextAlign.Left" IsPrimaryKey="true" Width="200"></GridColumn>
+                    <GridColumn Field=@nameof(Serie.Codigo) HeaderText="Código" TextAlign="TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Serie.Medida) HeaderText="Medida" TextAlign="TextAlign.Left" Width="200"></GridColumn>
 
                 </GridColumns>

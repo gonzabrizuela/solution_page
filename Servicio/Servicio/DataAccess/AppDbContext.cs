@@ -10,6 +10,7 @@ namespace Servicio.Server.DataAccess
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<Celdas> Celdas { get; set; }
         public DbSet<Estado> Estado { get; set; }
         public DbSet<Marca> Marca { get; set; }
         public DbSet<Medida> Medida { get; set; }

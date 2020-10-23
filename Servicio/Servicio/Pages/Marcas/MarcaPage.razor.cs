@@ -22,17 +22,7 @@ namespace Servicio.Pages.Marcas
         public bool Enabled = true;
         public bool Disabled = false;
 
-        protected List<Service> servicios = new List<Service>();
-        protected List<Modelo> modelos = new List<Modelo>();
-        protected List<Medida> medidas = new List<Medida>();
-        protected List<Serie> series = new List<Serie>();
-        protected List<Orificio> orificios = new List<Orificio>();
-        protected List<Sobrepresion> sobrepresiones = new List<Sobrepresion>();
-        protected List<Tipo> tipos = new List<Tipo>();
-        protected List<Estado> estados = new List<Estado>();
-        protected List<Trabajosefec> trabajosEfectuados = new List<Trabajosefec>();
         protected List<Marca> marcas = new List<Marca>();
-        protected List<Operario> operarios = new List<Operario>();
 
         protected List<Object> Toolbaritems = new List<Object>(){
         "Search",
@@ -46,17 +36,7 @@ namespace Servicio.Pages.Marcas
 
         protected override async Task OnInitializedAsync()
         {
-            servicios = await Http.GetFromJsonAsync<List<Service>>("api/Servicios");
-            modelos = await Http.GetFromJsonAsync<List<Modelo>>("api/Modelo");
-            medidas = await Http.GetFromJsonAsync<List<Medida>>("api/Medida");
-            series = await Http.GetFromJsonAsync<List<Serie>>("api/Serie");
-            orificios = await Http.GetFromJsonAsync<List<Orificio>>("api/Orificio");
-            sobrepresiones = await Http.GetFromJsonAsync<List<Sobrepresion>>("api/Sobrepresion");
-            tipos = await Http.GetFromJsonAsync<List<Tipo>>("api/Tipo");
-            estados = await Http.GetFromJsonAsync<List<Estado>>("api/Estado");
-            trabajosEfectuados = await Http.GetFromJsonAsync<List<Trabajosefec>>("api/TrabajosEfec");
             marcas = await Http.GetFromJsonAsync<List<Marca>>("api/Marca");
-            operarios = await Http.GetFromJsonAsync<List<Operario>>("api/Operario");
 
             await base.OnInitializedAsync();
         }
@@ -82,12 +62,11 @@ namespace Servicio.Pages.Marcas
 
                 if (!found)
                 {
+                    args.Data.Id = marcas.Max(s => s.Id) + 1;
                     response = await Http.PostAsJsonAsync("api/Marca", args.Data);
-
                 }
                 else
                 {
-
                     response = await Http.PutAsJsonAsync($"api/Marca/{args.Data.Id}", args.Data);
                 }
 
@@ -136,12 +115,10 @@ namespace Servicio.Pages.Marcas
                         {
                             Marca Nuevo = new Marca();
 
-                            //Nuevo.PEDIDO = operarios.Max(s => s.PEDIDO) + 1;
+                            Nuevo.Id = marcas.Max(s => s.Id) + 1;
                             Nuevo.Descripcion = selectedRecord.Descripcion;
-                          
 
                             var response = await Http.PostAsJsonAsync("api/Marca", Nuevo);
-
                             if (response.StatusCode == System.Net.HttpStatusCode.Created)
                             {
                                 Grid.Refresh();
