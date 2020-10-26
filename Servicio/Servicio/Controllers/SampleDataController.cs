@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http.Features;
 //File Manager's base functions are available in the below namespace
 using Syncfusion.EJ2.FileManager.Base;
 //File Manager's operations are available in the below namespace
-using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
+using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 
 namespace Servicio.Server.Controllers
 {
@@ -62,40 +62,6 @@ namespace Servicio.Server.Controllers
                     return this.operation.ToCamelCase(this.operation.Rename(args.Path, args.Name, args.NewName));
             }
             return null;
-        }
-        // Processing the Download operation
-        [Route("Download")]
-        public IActionResult Download(string downloadInput)
-        {
-            //Invoking download operation with the required paramaters
-            // path - Current path where the file is downloaded; Names - Files to be downloaded;
-            FileManagerDirectoryContent args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
-            return operation.Download(args.Path, args.Names);
-        }
-        // Processing the Upload operation
-        [Route("Upload")]
-        public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
-        {
-            //Invoking upload operation with the required paramaters
-            // path - Current path where the file is to uploaded; uploadFiles - Files to be uploaded; action - name of the operation(upload)
-            FileManagerResponse uploadResponse;
-            uploadResponse = operation.Upload(path, uploadFiles, action, null);
-            if (uploadResponse.Error != null)
-            {
-                Response.Clear();
-                Response.ContentType = "application/json; charset=utf-8";
-                Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-                Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
-            }
-            return Content("");
-        }
-        // Processing the GetImage operation
-        [Route("GetImage")]
-        public IActionResult GetImage(FileManagerDirectoryContent args)
-        {
-            //Invoking GetImage operation with the required paramaters
-            // path - Current path of the image file; Id - Image file id;
-            return this.operation.GetImage(args.Path, args.Id, false, null, null);
         }
     }
 }
