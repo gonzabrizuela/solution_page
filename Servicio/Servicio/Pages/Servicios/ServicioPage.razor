@@ -115,7 +115,7 @@
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Pedido anterior:</label>
                                                 <SfTextBox ID="PEDIDOANT" @bind-Value="@(servicio.PEDIDOANT)"></SfTextBox>
-                                            </div>
+                                            </div
 
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Fecha de mantenimiento anterior:</label>
@@ -540,6 +540,7 @@
                     <GridColumn Field=@nameof(Service.DESCARTICULO) HeaderText="Descripcion Articulo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.OBSERV) HeaderText="Observaciones" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
                     <GridColumn Field=@nameof(Service.CATALOGO) HeaderText="Ver Catalogo" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="200"></GridColumn>
+                
                 </GridColumns>
             </SfGrid>
         </div>
