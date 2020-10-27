@@ -27,35 +27,34 @@
 @inject NavigationManager NavManager
 
 
-
-    <EjsFileManager RootAliasName="Root Folder">
-        <FileManagerEvents ToolbarItemClicked="toolbarClick" OnMenuClick="menuClick"></FileManagerEvents>
-        <FileManagerAjaxSettings Url="/api/Default/SQLFileOperations"
-                                 GetImageUrl="/api/Default/SQLGetImage"
-                                 UploadUrl="/api/Default/SQLUpload"
-                                 DownloadUrl="/api/Default/SQLDownload">
-        </FileManagerAjaxSettings>
-        <FileManagerContextMenuSettings File="@Items" Folder="@Items"></FileManagerContextMenuSettings>
-        <FileManagerToolbarSettings Items="@ToolbarItems"></FileManagerToolbarSettings>
-    </EjsFileManager>
-    @code{
-        public string[] Items = new string[] { "Open", "|", "Delete", "Download", "Rename", "|", "Details", "Custom" };
-        public string[] ToolbarItems = new string[] { "NewFolder", "Upload", "Delete", "Download", "Rename", "SortBy", "Refresh", "Selection", "View", "Details", "Custom" };
-        public void toolbarClick(ToolbarClickEventArgs args)
+<SfFileManager RootAliasName="Root Folder">
+    <FileManagerEvents ToolbarItemClicked="toolbarClick" OnMenuClick="menuClick"></FileManagerEvents>
+    <Syncfusion.Blazor.FileManager.FileManagerAjaxSettings Url="/api/Default/SQLFileOperations"
+                                                           GetImageUrl="/api/Default/SQLGetImage"
+                                                           UploadUrl="/api/Default/SQLUpload"
+                                                           DownloadUrl="/api/Default/SQLDownload">
+    </Syncfusion.Blazor.FileManager.FileManagerAjaxSettings>
+    <Syncfusion.Blazor.FileManager.FileManagerContextMenuSettings File="@Items" Folder="@Items"></Syncfusion.Blazor.FileManager.FileManagerContextMenuSettings>
+    <Syncfusion.Blazor.FileManager.FileManagerToolbarSettings Items="@ToolbarItems"></Syncfusion.Blazor.FileManager.FileManagerToolbarSettings>
+</SfFileManager>
+@code{
+    public string[] Items = new string[] { "Open", "|", "Delete", "Download", "Rename", "|", "Details", "Custom" };
+    public string[] ToolbarItems = new string[] { "NewFolder", "Upload", "Delete", "Download", "Rename", "SortBy", "Refresh", "Selection", "View", "Details", "Custom" };
+    public void toolbarClick(ToolbarClickEventArgs args)
+    {
+        if (args.Item.Text == "Custom")
         {
-            if (args.Item.Text == "Custom")
-            {
-                // Perform the operation based on your requirement.
-                System.Diagnostics.Debug.Write("Custom item clicked");
-            }
-        }
-        public void menuClick(MenuClickEventArgs args)
-        {
-            if (args.Item.Text == "Custom")
-            {
-                // Perform the operation based on your requirement.
-                System.Diagnostics.Debug.WriteLine("Custom item clicked");
-            }
+            // Perform the operation based on your requirement.
+            System.Diagnostics.Debug.Write("Custom item clicked");
         }
     }
+    public void menuClick(MenuClickEventArgs args)
+    {
+        if (args.Item.Text == "Custom")
+        {
+            // Perform the operation based on your requirement.
+            System.Diagnostics.Debug.WriteLine("Custom item clicked");
+        }
+    }
+}
 

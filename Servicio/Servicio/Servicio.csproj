@@ -11,9 +11,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.41" />
-    <PackageReference Include="Syncfusion.EJ2.MVC5" Version="18.3.0.42" />
+    <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.44" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="18.3.0.44" />
+    <PackageReference Include="Syncfusion.EJ2.Blazor" Version="18.1.0.42" />
+    <PackageReference Include="Syncfusion.EJ2.MVC5" Version="18.3.0.44" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
   </ItemGroup>
 
