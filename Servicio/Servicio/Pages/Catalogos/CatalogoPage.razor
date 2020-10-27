@@ -1,0 +1,61 @@
+﻿@page "/catalogo/list"
+@using Syncfusion.Blazor.Grids
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Hosting;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Http.Features;
+@using Syncfusion.EJ2.FileManager
+
+//File Manager's base functions are available in the below namespace
+@using Syncfusion.EJ2.FileManager.Base;
+//File Manager's operations are available in the below namespace
+@using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
+@using Newtonsoft.Json;
+
+@using Microsoft.Extensions.Configuration;
+@inject IJSRuntime JsRuntime
+@using Servicio.Shared.Models
+@using Servicio.Extensions
+@using System.Net.Http.Json
+@inject CustomHttpClient Http
+@using Servicio
+@using Syncfusion.Blazor.FileManager;
+@inject NavigationManager NavManager
+
+
+
+    <EjsFileManager RootAliasName="Root Folder">
+        <FileManagerEvents ToolbarItemClicked="toolbarClick" OnMenuClick="menuClick"></FileManagerEvents>
+        <FileManagerAjaxSettings Url="/api/Default/SQLFileOperations"
+                                 GetImageUrl="/api/Default/SQLGetImage"
+                                 UploadUrl="/api/Default/SQLUpload"
+                                 DownloadUrl="/api/Default/SQLDownload">
+        </FileManagerAjaxSettings>
+        <FileManagerContextMenuSettings File="@Items" Folder="@Items"></FileManagerContextMenuSettings>
+        <FileManagerToolbarSettings Items="@ToolbarItems"></FileManagerToolbarSettings>
+    </EjsFileManager>
+    @code{
+        public string[] Items = new string[] { "Open", "|", "Delete", "Download", "Rename", "|", "Details", "Custom" };
+        public string[] ToolbarItems = new string[] { "NewFolder", "Upload", "Delete", "Download", "Rename", "SortBy", "Refresh", "Selection", "View", "Details", "Custom" };
+        public void toolbarClick(ToolbarClickEventArgs args)
+        {
+            if (args.Item.Text == "Custom")
+            {
+                // Perform the operation based on your requirement.
+                System.Diagnostics.Debug.Write("Custom item clicked");
+            }
+        }
+        public void menuClick(MenuClickEventArgs args)
+        {
+            if (args.Item.Text == "Custom")
+            {
+                // Perform the operation based on your requirement.
+                System.Diagnostics.Debug.WriteLine("Custom item clicked");
+            }
+        }
+    }
+
