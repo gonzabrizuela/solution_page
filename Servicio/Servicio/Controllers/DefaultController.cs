@@ -7,10 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
 using Microsoft.AspNetCore.Http.Features;
-//File Manager's base functions are available in the below namespace
 
 using Syncfusion.EJ2.FileManager.Base;
-//File Manager's operations are available in the below namespace
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base.SQLFileProvider;

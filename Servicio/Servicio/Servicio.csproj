@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Files\" />
-    <Folder Include="App_Data\" />
     <Folder Include="wwwroot\pdfs\" />
   </ItemGroup>
 
