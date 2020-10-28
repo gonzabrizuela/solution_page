@@ -43,21 +43,15 @@
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-Generalidades" role="tabpanel" aria-labelledby="pills-home-tab">
                                     <div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Id:</label>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Marca:</label>
-                                            </div>
-                                        </div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Id:</label>
                                                 <SfNumericTextBox ID="Id" @bind-Value="@(marca.Id)" Enabled="@Disabled"></SfNumericTextBox>
                                             </div>
 
                                             <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Marca:</label>
                                                 <SfTextBox ID="Descripcion" @bind-Value="@(marca.Descripcion)"></SfTextBox>
                                             </div>
                                         </div>

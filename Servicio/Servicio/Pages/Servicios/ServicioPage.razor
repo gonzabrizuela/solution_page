@@ -71,6 +71,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Fecha:</label>
+                                                <br />
                                                 <SfDatePicker ID="FECHA" @bind-Value="@(servicio.FECHA)" Enabled="@Disabled"></SfDatePicker>
                                             </div>
                                         </div>
@@ -144,7 +145,7 @@
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Marca:</label>
                                                 <SfDropDownList CssClass="customClass" ID="MARCA" TItem="Marca" @bind-Value="@(servicio.MARCA)" TValue="string" Placeholder="Seleccione la Marca" DataSource="@marcas">
-                                                    <DropDownListFieldSettings Value="Marca" Text="Marca"></DropDownListFieldSettings>
+                                                    <DropDownListFieldSettings Value="Descripcion" Text="Descripcion"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
                                         </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Servicio.Shared.Models;
+using Syncfusion.Blazor.FileManager;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.RichTextEditor.Internal;
@@ -12,7 +13,6 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Syncfusion.Blazor.FileManager;
 
 namespace Servicio.Pages.Servicios
 {
