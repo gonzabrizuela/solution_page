@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Syncfusion.Blazor.FileManager;
 
 namespace Servicio.Pages.Servicios
 {
@@ -25,6 +26,24 @@ namespace Servicio.Pages.Servicios
         public bool Disabled = false;
         public bool Visible { get; set; } = true;
 
+        public string[] Items = new string[] { "Open", "|", "Delete", "Download", "|", "Details" };
+        public string[] ToolbarItems = new string[] { "NewFolder", "Upload", "Delete", "Download", "SortBy", "Refresh", "Selection", "View", "Details" };
+        public void toolbarClick(ToolbarClickEventArgs args)
+        {
+            if (args.Item.Text == "Custom")
+            {
+                // Perform the operation based on your requirement.
+                System.Diagnostics.Debug.Write("Custom item clicked");
+            }
+        }
+        public void menuClick(MenuClickEventArgs args)
+        {
+            if (args.Item.Text == "Custom")
+            {
+                // Perform the operation based on your requirement.
+                System.Diagnostics.Debug.WriteLine("Custom item clicked");
+            }
+        }
         public class SIoNO
         {
             public string Text { get; set; }
@@ -51,7 +70,7 @@ namespace Servicio.Pages.Servicios
         "Edit",
         "Delete",
         "Print",
-        new ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
     };
 
