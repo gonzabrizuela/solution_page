@@ -46,13 +46,20 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="e-float-text e-label-top">Id:</label>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="e-float-text e-label-top">Marca:</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
                                                 <SfNumericTextBox ID="Id" @bind-Value="@(marca.Id)" Enabled="@Disabled"></SfNumericTextBox>
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Marca:</label>
                                                 <SfTextBox ID="Descripcion" @bind-Value="@(marca.Descripcion)"></SfTextBox>
-                                            </div>                                          
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
