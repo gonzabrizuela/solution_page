@@ -21,7 +21,7 @@ namespace Servicio.Pages.Servicios
         [Inject] protected CustomHttpClient Http { get; set; }
         [Inject] protected IJSRuntime JsRuntime { get; set; }
         protected SfGrid<Service> Grid;
-        
+        public string NroPedido = "";
         public bool Enabled = true;
         public bool Disabled = false;
         public bool Visible { get; set; } = true;
@@ -114,11 +114,31 @@ namespace Servicio.Pages.Servicios
                 if (!found)
                 {
                     args.Data.PEDIDO = servicios.Max(s => s.PEDIDO) + 1;
-                    response = await Http.PostAsJsonAsync("api/Servicio", args.Data);
+                    response = await Http.PostAsJsonAsync("api/Servicios", args.Data);
                 }
                 else
                 {
-                    response = await Http.PutAsJsonAsync($"api/Servicio/{args.Data.PEDIDO}", args.Data);
+                    if (args.Data.PEDIDOANT != "")
+                    {
+                        foreach (var rep in servicios)
+                        {
+                            if (args.Data.PEDIDOANT == rep.PEDIDO)
+                            {
+                                if (args.Data.CLIENTE != rep.CLIENTE)
+                                {
+                                    bool isConfirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Quiere traer los datos del pedido anterior?");
+                                    if (isConfirmed)
+                                    {
+                                        if (args.Data.PEDIDOANT == rep.PEDIDO)
+                                        {
+                                            args.Data.CLIENTE = rep.CLIENTE;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    response = await Http.PutAsJsonAsync($"api/Servicios/{args.Data.PEDIDO}", args.Data);
                 }
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
@@ -139,11 +159,11 @@ namespace Servicio.Pages.Servicios
             {
                 if (args.Data != null)
                 {
-                    bool isConfirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Seguro de que desea eliminar el servicio / la reparacion?");
+                    bool isConfirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Seguro de que desea eliminar la reparacion {args.Data.PEDIDO}?");
                     if (isConfirmed)
                     {
                         //servicios.Remove(servicios.Find(m => m.PEDIDO == args.Data.PEDIDO));
-                        await Http.DeleteAsync($"api/Servicio/{args.Data.PEDIDO}");
+                        await Http.DeleteAsync($"api/Servicios/{args.Data.PEDIDO}");
                     }
                 }
             }
@@ -217,7 +237,7 @@ namespace Servicio.Pages.Servicios
                             Nuevo.DESCARTICULO = selectedRecord.DESCARTICULO;
                             Nuevo.OBSERV = selectedRecord.OBSERV;
 
-                            var response = await Http.PostAsJsonAsync("api/Servicio", Nuevo);
+                            var response = await Http.PostAsJsonAsync("api/Servicios", Nuevo);
 
                             if (response.StatusCode == System.Net.HttpStatusCode.Created)
                             {
@@ -432,6 +452,16 @@ namespace Servicio.Pages.Servicios
                     }
                 }
                 //await this.Grid.ExcelExport();
+            }
+            if (args.Item.Text == "Edit")
+            {
+                if (this.Grid.SelectedRecords.Count > 0)
+                {
+                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
+                    {
+                        NroPedido = selectedRecord.PEDIDO;
+                    }
+                }
             }
         }
 

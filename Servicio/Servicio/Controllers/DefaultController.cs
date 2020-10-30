@@ -23,7 +23,7 @@ namespace Servicio.Controllers
         public DefaultController(IConfiguration configuration)
         {
             operation = new SQLFileProvider(configuration);
-            operation.SetSQLConnection("FileManagerConnection", "Product", "0");
+            operation.SetSQLConnection("DefaultConnection", "Product", "0");
         }
         [Route("SQLFileOperations")]
         public object SQLFileOperations([FromBody] FileManagerDirectoryContent args)
