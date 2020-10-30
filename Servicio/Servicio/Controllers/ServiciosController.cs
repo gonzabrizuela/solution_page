@@ -61,7 +61,7 @@ namespace Servicio.Server.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
                 if (!ServiciosExists(id))
                 {
