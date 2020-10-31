@@ -45,6 +45,17 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.card .back-icon {
+    position: absolute;
+    transform: rotateZ(11deg);
+    bottom: 10px;
+    font-size: 100px;
+    right: 10px;
+    z-index: -1;
+    color: rgba(200, 200, 200, .3);
+}
+
 .game-board {
     display: grid;
     grid-template-rows: 200px 200px 200px;

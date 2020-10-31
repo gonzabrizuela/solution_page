@@ -45,18 +45,18 @@
                                     <div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Id:</label>
+                                                <label >Id:</label>
                                                 <SfNumericTextBox ID="Id" @bind-Value="@(medida.Id)" Enabled="@Disabled"></SfNumericTextBox>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Codigo de Medida:</label>
+                                                <label >Codigo de Medida:</label>
                                                 <SfTextBox ID="Codigo" @bind-Value="@(medida.Codigo)"></SfTextBox>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="e-float-text e-label-top">Medida:</label>
+                                                <label >Medida:</label>
                                                 <SfTextBox ID="Descripcion" @bind-Value="@(medida.Descripcion)"></SfTextBox>
                                             </div>
                                         </div>
@@ -117,12 +117,78 @@
         display: inline-flex;
         margin-left: 5%;
     }
+
+
+
+    .e-input-picture::before {
+        content: '\e335';
+        font-family: e-icons;
+    }
+
+    .e-input-calendar::before {
+        content: '\e901';
+        font-family: e-icons;
+        font-size: 13px;
+    }
+
+    .content-wrapper {
+        width: 90%;
+        margin: 0 auto;
+        min-width: 85px;
+    }
+
+        .content-wrapper div.row {
+            padding: 15px 0px;
+        }
+
+    .custom-padding-05 {
+        padding-top: 5px;
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .content-wrapper {
+            width: 92%;
+        }
+
+        .col-xs-6,
+        .col-xs-4,
+        .col-xs-12 {
+            padding: 10px 5px;
+            width: 100%;
+        }
+
+        .content-wrapper div.row {
+            padding: 0px;
+        }
+    }
+
+    #description td {
+        vertical-align: top;
+    }
+
+    .e-outline.e-float-input,
+    .e-outline.e-float-input.e-control-wrapper {
+        margin-top: 0;
+    }
+
+    .fabric .row.material2,
+    .bootstrap .row.material2,
+    .bootstrap4 .row.material2,
+    .highcontrast .row.material2 {
+        display: none;
+    }
+
+    .e-upload-picture::before {
+        content: '\e335';
+        font-family: e-icons;
+    }
+
+    .bootstrap4 .e-upload-picture::before {
+        content: '\e769';
+        font-family: e-icons;
+    }
 </style>
 
-
-@*<SfQRCodeGenerator Width="200px" Height="150px" Value="http://www.aerre.com.ar/">
-        <QRCodeGeneratorDisplayText text=" "></QRCodeGeneratorDisplayText>
-    </SfQRCodeGenerator>*@
 <style>
     #target {
         height: 500px;
