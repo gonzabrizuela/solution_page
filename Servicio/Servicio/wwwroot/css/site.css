@@ -45,7 +45,11 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.game-board {
+    display: grid;
+    grid-template-rows: 200px 200px 200px;
+    grid-template-columns: 200px 200px 200px;
+}
 .sidebar {
     background: rgb(255,255,255) !important;
     background: linear-gradient(90deg, rgba(255,255,255,1) 59%, rgba(217,221,238,1) 73%, rgba(167,177,215,1) 81%, rgba(0,28,140,1) 100%) !important;

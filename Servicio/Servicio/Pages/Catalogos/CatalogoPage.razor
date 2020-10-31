@@ -26,8 +26,7 @@
 @using Syncfusion.Blazor.FileManager;
 @inject NavigationManager NavManager
 
-
-<SfFileManager RootAliasName="Root Folder">
+@*<SfFileManager RootAliasName="Root Folder">
     <FileManagerEvents ToolbarItemClicked="toolbarClick" OnMenuClick="menuClick"></FileManagerEvents>
     <Syncfusion.Blazor.FileManager.FileManagerAjaxSettings Url="/api/Default/SQLFileOperations"
                                                            GetImageUrl="/api/Default/SQLGetImage"
@@ -36,7 +35,7 @@
     </Syncfusion.Blazor.FileManager.FileManagerAjaxSettings>
     <Syncfusion.Blazor.FileManager.FileManagerContextMenuSettings File="@Items" Folder="@Items"></Syncfusion.Blazor.FileManager.FileManagerContextMenuSettings>
     <Syncfusion.Blazor.FileManager.FileManagerToolbarSettings Items="@ToolbarItems"></Syncfusion.Blazor.FileManager.FileManagerToolbarSettings>
-</SfFileManager>
+</SfFileManager>*@
 @code{
     public string[] Items = new string[] { "Open", "|", "Delete", "Download", "Rename", "|", "Details", "Custom" };
     public string[] ToolbarItems = new string[] { "NewFolder", "Upload", "Delete", "Download", "Rename", "SortBy", "Refresh", "Selection", "View", "Details", "Custom" };
