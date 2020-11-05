@@ -24,7 +24,6 @@
 @using System.IO
 @using Syncfusion.Blazor.Data
 @using Syncfusion.Blazor.DropDowns
-
 <div class="col-lg-12 control-section">
     <div class="content-wrapper">
         <div class="row">
@@ -144,7 +143,7 @@
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Marca:</label>
+                                                <a href="/marca/list" target="_blank">Marca:</a>
                                                 <SfDropDownList CssClass="customClass" ID="MARCA" TItem="Marca" @bind-Value="@(servicio.MARCA)" TValue="string" Placeholder="Seleccione la Marca" DataSource="@marcas">
                                                     <DropDownListFieldSettings Value="Descripcion" Text="Descripcion"></DropDownListFieldSettings>
                                                 </SfDropDownList>
@@ -158,7 +157,7 @@
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Modelo:</label>
+                                                <a href="/modelo/list" target="_blank">Modelo:</a>
                                                 <SfDropDownList CssClass="customClass" ID="MODELO" TItem="Modelo" @bind-Value="@(servicio.MODELO)" TValue="string" Placeholder="Seleccione el Modelo" DataSource="@modelos">
                                                     <DropDownListFieldSettings Value="Modelo" Text="Modelo"></DropDownListFieldSettings>
                                                 </SfDropDownList>
@@ -167,14 +166,14 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label>Medida:</label>
+                                                <a href="/medida/list" target="_blank">Medida:</a>
                                                 <SfDropDownList CssClass="customClass" ID="MEDIDA" TItem="Medida" @bind-Value="@(servicio.MEDIDA)" TValue="string" Placeholder="Seleccione la Medida" DataSource="@medidas">
                                                     <DropDownListFieldSettings Value="Codigo" Text="Medida"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Serie:</label>
+                                                <a href="/serie/list" target="_blank">Serie:</a>
                                                 <SfDropDownList CssClass="customClass" ID="SERIE" TItem="Serie" @bind-Value="@(servicio.SERIE)" TValue="string" Placeholder="Seleccione la Serie" DataSource="@series">
                                                     <DropDownListFieldSettings Value="Codigo" Text="Medida"></DropDownListFieldSettings>
                                                 </SfDropDownList>
@@ -183,7 +182,7 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label>Orificio:</label>
+                                                <a href="/orificio/list" target="_blank">Orificio:</a>
                                                 <SfDropDownList CssClass="customClass" ID="ORIFICIO" TItem="Orificio" @bind-Value="@(servicio.ORIFICIO)" TValue="string" Placeholder="Seleccione el Orificio" DataSource="@orificios">
                                                     <DropDownListFieldSettings Value="Orificio" Text="Area"></DropDownListFieldSettings>
                                                 </SfDropDownList>
@@ -278,7 +277,7 @@
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Estado:</label>
+                                                <a href="/estado/list" target="_blank">Estado:</a>
                                                 <SfDropDownList CssClass="customClass" ID="ESTADO" TItem="Estado" @bind-Value="@(servicio.ESTADO)" TValue="string" Placeholder="Estado" DataSource="@estados">
                                                     <DropDownListFieldSettings Value="Estado" Text="Estado"></DropDownListFieldSettings>
                                                 </SfDropDownList>
@@ -388,14 +387,14 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label>Responsable:</label>
+                                                <a href="/operario/list" target="_blank">Responsable:</a>
                                                 <SfDropDownList CssClass="customClass" ID="RESP" TItem="Operario" @bind-Value="@(servicio.RESP)" TValue="string" Placeholder="Responsable" DataSource="@operarios">
                                                     <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
                                                 </SfDropDownList>
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Controló:</label>
+                                                <a href="/operario/list" target="_blank">Responsable:</a>
                                                 <SfDropDownList CssClass="customClass" ID="CONTROLO" TItem="Operario" @bind-Value="@(servicio.CONTROLO)" TValue="string" Placeholder="Controló" DataSource="@operarios">
                                                     <DropDownListFieldSettings Value="DES_OPER" Text="DES_OPER"></DropDownListFieldSettings>
                                                 </SfDropDownList>
