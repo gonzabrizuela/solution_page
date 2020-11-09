@@ -13,6 +13,12 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.IO;
+using Syncfusion.Pdf.Grid;
+using System.Drawing;
+using Spire.Pdf.Graphics;
 
 namespace Servicio.Pages.Servicios
 {
@@ -20,6 +26,7 @@ namespace Servicio.Pages.Servicios
     {
         [Inject] protected CustomHttpClient Http { get; set; }
         [Inject] protected IJSRuntime JsRuntime { get; set; }
+        [Inject] protected Microsoft.JSInterop.IJSRuntime JS { get; set; }
         protected SfGrid<Service> Grid;
         public string NroPedido = "";
         public bool Enabled = true;
@@ -70,7 +77,7 @@ namespace Servicio.Pages.Servicios
         "Edit",
         "Delete",
         "Print",
-          "PdfEXport",
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "PdfExport", TooltipText = "PdfExport", PrefixIcon = "e-copy", Id = "PdfExport" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
     };
@@ -481,20 +488,36 @@ namespace Servicio.Pages.Servicios
                 {
                     foreach (Service selectedRecord in this.Grid.SelectedRecords)
                     {
-                        PdfExportProperties ExportProperties = new PdfExportProperties();
-                        PdfTheme Theme = new PdfTheme();
-                        PdfThemeStyle RecordThemeStyle = new PdfThemeStyle()
-                        {
-                            FontColor = "#64FA50",
-                            FontName = "Calibri",
-                            FontSize = 17,
-                            Font = new PdfGridFont() { IsTrueType = true }
-                        };
-                        Theme.Record = RecordThemeStyle;
-                        ExportProperties.Theme = Theme;
-                        
+                        //Create a new PDF document
+                        PdfDocument pdfDocument = new PdfDocument();
+                        //Create the page
+                        PdfPage pdfPage = pdfDocument.Pages.Add();
+                        //Create new PdfGrid
+                        PdfGrid pdfGrid = new PdfGrid();
+                        //Add columns
+                        pdfGrid.Columns.Add(2);
+                        //Add row
+                        PdfGridRow row1 = pdfGrid.Rows.Add();
+                        row1.Cells[0].Value = "Product Name";
+                        row1.Cells[1].Value = "Description";
+                        PdfGridRow row2 = pdfGrid.Rows.Add();
+                        row2.Cells[0].Value = "Essential PDF";
+                        string htmlText = "<font color='#0000F8'><b>Essential PDF</b></font> is a <u><i>.NET library</i></u> " + "with the capability to produce <i>Adobe PDF files </i>.";
+                        //Render HTML text
+                        PdfHTMLTextElement richTextElement = new PdfHTMLTextElement(htmlText, new PdfStandardFont(PdfFontFamily.TimesRoman, 12), PdfBrushes.Black);
+                        //Set HTML styled text value to the table cell
+                        row2.Cells[1].Value = richTextElement;
+                        //Draw PdfGrid
+                        pdfGrid.Draw(pdfPage, PointF.Empty);
+                        //Save the document
+                        pdfDocument.Save(selectedRecord.PEDIDO + ".pdf");
+                        //Close the document
+                        pdfDocument.Close(true);
+                        //This will open the PDF file so, the result will be seen in default PDF viewer
 
-                        await this.Grid.PdfExport(ExportProperties);
+                        //Download the PDF in the browser.
+                        await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", stream.ToArray());
+
                     }
                 }
             }
