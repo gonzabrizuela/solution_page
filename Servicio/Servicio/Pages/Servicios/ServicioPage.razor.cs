@@ -498,22 +498,28 @@ namespace Servicio.Pages.Servicios
                         pdfGrid.Columns.Add(2);
                         //Add row
                         PdfGridRow row1 = pdfGrid.Rows.Add();
-                        row1.Cells[0].Value = "Product Name";
+                        row1.Cells[0].Value = $"Pedido: {selectedRecord.PEDIDO}";
                         row1.Cells[1].Value = "Description";
                         PdfGridRow row2 = pdfGrid.Rows.Add();
                         row2.Cells[0].Value = "Essential PDF";
+
+                        /*
                         string htmlText = "<font color='#0000F8'><b>Essential PDF</b></font> is a <u><i>.NET library</i></u> " + "with the capability to produce <i>Adobe PDF files </i>.";
                         //Render HTML text
-                        PdfHTMLTextElement richTextElement = new PdfHTMLTextElement(htmlText, new PdfStandardFont(PdfFontFamily.TimesRoman, 12), PdfBrushes.Black);
+                        PdfTextElement richTextElement = new PdfTextElement(htmlText, new PdfStandardFont(Syncfusion.Pdf.Graphics.PdfFontFamily.TimesRoman, 12), Syncfusion.Pdf.Graphics.PdfBrushes.Black);
                         //Set HTML styled text value to the table cell
                         row2.Cells[1].Value = richTextElement;
-                        //Draw PdfGrid
-                        pdfGrid.Draw(pdfPage, PointF.Empty);
-                        //Save the document
-                        pdfDocument.Save(selectedRecord.PEDIDO + ".pdf");
-                        //Close the document
+                        */
+
+                        //Draw PDF grid into the PDF page
+                        pdfGrid.Draw(pdfPage, new Syncfusion.Drawing.PointF(0, 0));
+
+                        //Saving the PDF to the MemoryStream
+                        MemoryStream stream = new MemoryStream();
+
+                        pdfDocument.Save(stream);
+
                         pdfDocument.Close(true);
-                        //This will open the PDF file so, the result will be seen in default PDF viewer
 
                         //Download the PDF in the browser.
                         await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", stream.ToArray());
