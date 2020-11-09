@@ -70,6 +70,7 @@ namespace Servicio.Pages.Servicios
         "Edit",
         "Delete",
         "Print",
+          "PdfEXport",
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
     };
@@ -473,6 +474,29 @@ namespace Servicio.Pages.Servicios
                     }
                 }
                 //await this.Grid.ExcelExport();
+            }
+            if (args.Item.Text == "PdfExport")
+            {
+                if (this.Grid.SelectedRecords.Count > 0)
+                {
+                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
+                    {
+                        PdfExportProperties ExportProperties = new PdfExportProperties();
+                        PdfTheme Theme = new PdfTheme();
+                        PdfThemeStyle RecordThemeStyle = new PdfThemeStyle()
+                        {
+                            FontColor = "#64FA50",
+                            FontName = "Calibri",
+                            FontSize = 17,
+                            Font = new PdfGridFont() { IsTrueType = true }
+                        };
+                        Theme.Record = RecordThemeStyle;
+                        ExportProperties.Theme = Theme;
+                        
+
+                        await this.Grid.PdfExport(ExportProperties);
+                    }
+                }
             }
             if (args.Item.Text == "Edit")
             {
