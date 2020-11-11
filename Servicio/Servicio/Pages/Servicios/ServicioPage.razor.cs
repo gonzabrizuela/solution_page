@@ -17,8 +17,12 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using System.IO;
 using Syncfusion.Pdf.Grid;
-using System.Drawing;
-using Spire.Pdf.Graphics;
+using Syncfusion.Blazor.Diagrams;
+using Syncfusion.Pdf.Tables;
+using System.Data;
+using Syncfusion.Pdf.Parsing;
+using Syncfusion.Drawing;
+using Microsoft.AspNetCore.Http;
 
 namespace Servicio.Pages.Servicios
 {
@@ -77,6 +81,8 @@ namespace Servicio.Pages.Servicios
         "Edit",
         "Delete",
         "Print",
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba2", TooltipText = "Prueba2", PrefixIcon = "e-copy", Id = "Prueba2" },
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba", TooltipText = "Prueba", PrefixIcon = "e-copy", Id = "Prueba" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "PdfExport", TooltipText = "PdfExport", PrefixIcon = "e-copy", Id = "PdfExport" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
@@ -488,42 +494,474 @@ namespace Servicio.Pages.Servicios
                 {
                     foreach (Service selectedRecord in this.Grid.SelectedRecords)
                     {
+
+
                         //Create a new PDF document
-                        PdfDocument pdfDocument = new PdfDocument();
+                        PdfDocument document = new PdfDocument();
+
                         //Create the page
-                        PdfPage pdfPage = pdfDocument.Pages.Add();
-                        //Create new PdfGrid
+                        PdfPage page = document.Pages.Add();
+
+                        //Create PDF graphics for the page
+                        FileStream fontStream = new FileStream("E:\\solution_page\\Servicio\\Servicio\\wwwroot\\Calibri 400.ttf", FileMode.Open, FileAccess.Read);
+
+                        //Create a PdfGrid
                         PdfGrid pdfGrid = new PdfGrid();
-                        //Add columns
-                        pdfGrid.Columns.Add(2);
-                        //Add row
-                        PdfGridRow row1 = pdfGrid.Rows.Add();
-                        row1.Cells[0].Value = $"Pedido: {selectedRecord.PEDIDO}";
-                        row1.Cells[1].Value = "Description";
-                        PdfGridRow row2 = pdfGrid.Rows.Add();
-                        row2.Cells[0].Value = "Essential PDF";
 
-                        /*
-                        string htmlText = "<font color='#0000F8'><b>Essential PDF</b></font> is a <u><i>.NET library</i></u> " + "with the capability to produce <i>Adobe PDF files </i>.";
-                        //Render HTML text
-                        PdfTextElement richTextElement = new PdfTextElement(htmlText, new PdfStandardFont(Syncfusion.Pdf.Graphics.PdfFontFamily.TimesRoman, 12), Syncfusion.Pdf.Graphics.PdfBrushes.Black);
-                        //Set HTML styled text value to the table cell
-                        row2.Cells[1].Value = richTextElement;
-                        */
+                        //Create and customize the string formats
+                        PdfStringFormat Centrado = new PdfStringFormat();
+                        Centrado.Alignment = PdfTextAlignment.Center;
+                        Centrado.LineAlignment = PdfVerticalAlignment.Middle;
 
-                        //Draw PDF grid into the PDF page
-                        pdfGrid.Draw(pdfPage, new Syncfusion.Drawing.PointF(0, 0));
+                        //Create and customize the string formats
+                        PdfStringFormat Izquierda = new PdfStringFormat();
+                        Izquierda.Alignment = PdfTextAlignment.Left;
+                        Izquierda.LineAlignment = PdfVerticalAlignment.Middle;
+
+                        //Add columns to PdfGrid
+                        for (int i = 0; i < 6; i++)
+                        {
+                            PdfGridColumn column = pdfGrid.Columns.Add();
+                            if (i == 0 || i == 1 || i == 4 || i == 5)
+                            {
+                                column.Width = 64;
+                            }
+                            if (i == 2 || i == 3)
+                            {
+
+                                column.Width = 128;
+                            }
+                        }
+
+                        //Add rows to PdfGrid
+                        for (int i = 0; i < 32; i++)
+                        {
+                            PdfGridRow row = pdfGrid.Rows.Add();
+                            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 9 || i == 19 || i == 23)
+                            {
+                                row.Height = 26;
+                            }
+                            else
+                            {
+                                row.Height = 23;
+                            }
+
+                        }
+                        //Load the image from the stream 
+                        FileStream fs = new FileStream("E:\\solution_page\\Servicio\\Servicio\\wwwroot\\logo_aerre.jpg", FileMode.Open);
+
+                        //Add RowSpan
+                        PdfGridCell gridCell = pdfGrid.Rows[0].Cells[0];
+                        gridCell.ColumnSpan = 2;
+                        gridCell.RowSpan = 2;
+                        gridCell.StringFormat = Centrado;
+                        gridCell.Value = new PdfBitmap(fs);
+
+                        //Add RowSpan
+                        PdfGridCell gridCell2 = pdfGrid.Rows[0].Cells[2];
+                        gridCell2.ColumnSpan = 2;
+                        gridCell2.StringFormat = Centrado;
+                        gridCell2.Value = "CERTIFICADO DE MANTENIMIENTO Y CALIBRACIÓN";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell3 = pdfGrid.Rows[1].Cells[2];
+                        gridCell3.ColumnSpan = 2;
+                        gridCell3.StringFormat = Centrado;
+                        gridCell3.Value = "VALVULA DE SEGURIDAD Y ALIVIO";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell4 = pdfGrid.Rows[0].Cells[4];
+                        gridCell4.ColumnSpan = 2;
+                        gridCell4.StringFormat = Centrado;
+                        gridCell4.Value = $"Fecha: {DateTime.Today.Day} / {DateTime.Today.Month} / {DateTime.Today.Year}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell5 = pdfGrid.Rows[1].Cells[4];
+                        gridCell5.ColumnSpan = 2;
+                        gridCell5.StringFormat = Centrado;
+                        gridCell5.Value = $"Pedido Número: {selectedRecord.PEDIDO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell6 = pdfGrid.Rows[2].Cells[0];
+                        gridCell6.ColumnSpan = 6;
+                        gridCell6.StringFormat = Centrado;
+                        gridCell6.Value = "ENSAYOS EFECTUADOS EN BANCO CON PULMÓN HIDRO NEUMÁTICO. FLUIDO DE PRUEBA: AIRE A TEMPERATURA AMBIENTE";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell7 = pdfGrid.Rows[3].Cells[0];
+                        gridCell7.ColumnSpan = 6;
+                        gridCell7.StringFormat = Centrado;
+                        gridCell7.Value = "GENERALIDADES";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell8 = pdfGrid.Rows[4].Cells[0];
+                        gridCell8.ColumnSpan = 3;
+                        gridCell8.StringFormat = Izquierda;
+                        gridCell8.Value = $"   Cliente: {selectedRecord.CLIENTE}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell9 = pdfGrid.Rows[4].Cells[3];
+                        gridCell9.ColumnSpan = 3;
+                        gridCell9.StringFormat = Izquierda;
+                        gridCell9.Value = $"   Planta: {selectedRecord.PLANTA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell10 = pdfGrid.Rows[5].Cells[0];
+                        gridCell10.ColumnSpan = 3;
+                        gridCell10.StringFormat = Izquierda;
+                        gridCell10.Value = $"   Orden de Compra: {selectedRecord.OCOMPRA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell11 = pdfGrid.Rows[5].Cells[3];
+                        gridCell11.ColumnSpan = 3;
+                        gridCell11.StringFormat = Izquierda;
+                        gridCell11.Value = $"   Remito recepción: {selectedRecord.REMITOREC}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell12 = pdfGrid.Rows[6].Cells[0];
+                        gridCell12.ColumnSpan = 3;
+                        gridCell12.StringFormat = Izquierda;
+                        gridCell12.Value = $"   Observaciones: {selectedRecord.OBSERV}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell13 = pdfGrid.Rows[6].Cells[3];
+                        gridCell13.ColumnSpan = 3;
+                        gridCell13.StringFormat = Izquierda;
+                        gridCell13.Value = $"   Descripción artículo: {selectedRecord.DESCARTICULO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell14 = pdfGrid.Rows[7].Cells[0];
+                        gridCell14.ColumnSpan = 3;
+                        gridCell14.StringFormat = Izquierda;
+                        gridCell14.Value = $"   Pedido anterior: {selectedRecord.PEDIDOANT}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell15 = pdfGrid.Rows[7].Cells[3];
+                        gridCell15.ColumnSpan = 3;
+                        gridCell15.StringFormat = Izquierda;
+                        gridCell15.Value = $"   Fecha de mantenimiento anterior: {selectedRecord.FECMANTANT}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell16 = pdfGrid.Rows[8].Cells[0];
+                        gridCell16.ColumnSpan = 6;
+                        gridCell16.StringFormat = Izquierda;
+                        gridCell16.Value = $"   Remito: {selectedRecord.REMITO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell17 = pdfGrid.Rows[9].Cells[0];
+                        gridCell17.ColumnSpan = 6;
+                        gridCell17.StringFormat = Centrado;
+                        gridCell17.Value = "DATOS DE PLACA";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell18 = pdfGrid.Rows[10].Cells[0];
+                        gridCell18.ColumnSpan = 3;
+                        gridCell18.StringFormat = Izquierda;
+                        gridCell18.Value = $"   TAG: {selectedRecord.IDENTIFICACION}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell19 = pdfGrid.Rows[10].Cells[3];
+                        gridCell19.ColumnSpan = 3;
+                        gridCell19.StringFormat = Izquierda;
+                        gridCell19.Value = $"   Marca: {selectedRecord.MARCA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell20 = pdfGrid.Rows[11].Cells[0];
+                        gridCell20.ColumnSpan = 3;
+                        gridCell20.StringFormat = Izquierda;
+                        gridCell20.Value = $"   Número de serie: {selectedRecord.NSERIE}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell21 = pdfGrid.Rows[11].Cells[3];
+                        gridCell21.ColumnSpan = 3;
+                        gridCell21.StringFormat = Izquierda;
+                        gridCell21.Value = $"   Marca: {selectedRecord.MODELO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell22 = pdfGrid.Rows[12].Cells[0];
+                        gridCell22.ColumnSpan = 3;
+                        gridCell22.StringFormat = Izquierda;
+                        gridCell22.Value = $"   Número de serie: {selectedRecord.MEDIDA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell23 = pdfGrid.Rows[12].Cells[3];
+                        gridCell23.ColumnSpan = 3;
+                        gridCell23.StringFormat = Izquierda;
+                        gridCell23.Value = $"   Marca: {selectedRecord.SERIE}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell24 = pdfGrid.Rows[13].Cells[0];
+                        gridCell24.ColumnSpan = 3;
+                        gridCell24.StringFormat = Izquierda;
+                        gridCell24.Value = $"   Orificio: {selectedRecord.ORIFICIO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell25 = pdfGrid.Rows[13].Cells[3];
+                        gridCell25.ColumnSpan = 3;
+                        gridCell25.StringFormat = Izquierda;
+                        gridCell25.Value = $"   Año: {selectedRecord.AÑO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell26 = pdfGrid.Rows[14].Cells[0];
+                        gridCell26.ColumnSpan = 3;
+                        gridCell26.StringFormat = Izquierda;
+                        gridCell26.Value = $"   Area: {selectedRecord.AREA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell27 = pdfGrid.Rows[14].Cells[3];
+                        gridCell27.ColumnSpan = 3;
+                        gridCell27.StringFormat = Izquierda;
+                        gridCell27.Value = $"   Fluido: {selectedRecord.FLUIDO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell28 = pdfGrid.Rows[15].Cells[0];
+                        gridCell28.ColumnSpan = 3;
+                        gridCell28.StringFormat = Izquierda;
+                        gridCell28.Value = $"   Sobrepresión: {selectedRecord.SOBREPRESION}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell29 = pdfGrid.Rows[15].Cells[3];
+                        gridCell29.ColumnSpan = 3;
+                        gridCell29.StringFormat = Izquierda;
+                        gridCell29.Value = $"   Presión: {selectedRecord.PRESION}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell30 = pdfGrid.Rows[16].Cells[0];
+                        gridCell30.ColumnSpan = 3;
+                        gridCell30.StringFormat = Izquierda;
+                        gridCell30.Value = $"   Contrapresión: {selectedRecord.CONTRAPRESION}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell31 = pdfGrid.Rows[16].Cells[3];
+                        gridCell31.ColumnSpan = 3;
+                        gridCell31.StringFormat = Izquierda;
+                        gridCell31.Value = $"   Tipo: {selectedRecord.TIPO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell32 = pdfGrid.Rows[17].Cells[0];
+                        gridCell32.ColumnSpan = 3;
+                        gridCell32.StringFormat = Izquierda;
+                        gridCell32.Value = $"   Temperatura: {selectedRecord.TEMP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell33 = pdfGrid.Rows[17].Cells[3];
+                        gridCell33.ColumnSpan = 3;
+                        gridCell33.StringFormat = Izquierda;
+                        gridCell33.Value = $"   Resorte: {selectedRecord.RESORTE}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell34 = pdfGrid.Rows[18].Cells[0];
+                        gridCell34.ColumnSpan = 3;
+                        gridCell34.StringFormat = Izquierda;
+                        gridCell34.Value = $"   Presión en Banco: {selectedRecord.PRESIONBANCO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell35 = pdfGrid.Rows[18].Cells[3];
+                        gridCell35.ColumnSpan = 3;
+                        gridCell35.StringFormat = Izquierda;
+                        gridCell35.Value = $"   Servicio: {selectedRecord.SERVICIO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell36 = pdfGrid.Rows[19].Cells[0];
+                        gridCell36.ColumnSpan = 6;
+                        gridCell36.StringFormat = Centrado;
+                        gridCell36.Value = "ENSAYOS A LA RECEPCIÓN";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell37 = pdfGrid.Rows[20].Cells[0];
+                        gridCell37.ColumnSpan = 3;
+                        gridCell37.StringFormat = Izquierda;
+                        gridCell37.Value = $"   Ensayo a la Recepción: {selectedRecord.ENSRECEP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell38 = pdfGrid.Rows[20].Cells[3];
+                        gridCell38.ColumnSpan = 3;
+                        gridCell38.StringFormat = Izquierda;
+                        gridCell38.Value = $"   Estado: {selectedRecord.ESTADO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell39 = pdfGrid.Rows[21].Cells[0];
+                        gridCell39.ColumnSpan = 3;
+                        gridCell39.StringFormat = Izquierda;
+                        gridCell39.Value = $"   Presión ensayo recepción: {selectedRecord.PRESIONRECEP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell40 = pdfGrid.Rows[21].Cells[3];
+                        gridCell40.ColumnSpan = 3;
+                        gridCell40.StringFormat = Izquierda;
+                        gridCell40.Value = $"   Fugas: {selectedRecord.FUGAS}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell41 = pdfGrid.Rows[22].Cells[0];
+                        gridCell41.ColumnSpan = 3;
+                        gridCell41.StringFormat = Izquierda;
+                        gridCell41.Value = $"   Presión de fuga: {selectedRecord.PRESIONFUGA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell42 = pdfGrid.Rows[22].Cells[3];
+                        gridCell42.ColumnSpan = 3;
+                        gridCell42.StringFormat = Izquierda;
+                        gridCell42.Value = $"   Cambio de presión: {selectedRecord.CAMBIOPRESION}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell43 = pdfGrid.Rows[23].Cells[0];
+                        gridCell43.ColumnSpan = 6;
+                        gridCell43.StringFormat = Centrado;
+                        gridCell43.Value = "TRABAJOS EFECTUADOS";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell44 = pdfGrid.Rows[24].Cells[0];
+                        gridCell44.ColumnSpan = 3;
+                        gridCell44.StringFormat = Izquierda;
+                        gridCell44.Value = $"   Cambio de repuestos: {selectedRecord.CAMBIOREPUESTO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell45 = pdfGrid.Rows[24].Cells[3];
+                        gridCell45.ColumnSpan = 3;
+                        gridCell45.StringFormat = Izquierda;
+                        gridCell45.Value = $"   Repuestos: {selectedRecord.REPUESTOS}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell46 = pdfGrid.Rows[25].Cells[0];
+                        gridCell46.ColumnSpan = 3;
+                        gridCell46.StringFormat = Izquierda;
+                        gridCell46.Value = $"   Código de resorte: {selectedRecord.CODRESORTE}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell47 = pdfGrid.Rows[25].Cells[3];
+                        gridCell47.ColumnSpan = 3;
+                        gridCell47.StringFormat = Izquierda;
+                        gridCell47.Value = $"   Ensayo contrapresión: {selectedRecord.ENSAYOCONTRAP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell48 = pdfGrid.Rows[26].Cells[0];
+                        gridCell48.ColumnSpan = 3;
+                        gridCell48.StringFormat = Izquierda;
+                        gridCell48.Value = $"   Trabajos efectuados: {selectedRecord.TRABAJOSEFEC}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell49 = pdfGrid.Rows[26].Cells[3];
+                        gridCell49.ColumnSpan = 3;
+                        gridCell49.StringFormat = Izquierda;
+                        gridCell49.Value = $"   Trabajos accesorios: {selectedRecord.TRABAJOSACCES}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell50 = pdfGrid.Rows[27].Cells[0];
+                        gridCell50.ColumnSpan = 3;
+                        gridCell50.StringFormat = Izquierda;
+                        gridCell50.Value = $"   Presión solicitada: {selectedRecord.PRESIONSOLIC}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell51 = pdfGrid.Rows[27].Cells[3];
+                        gridCell51.ColumnSpan = 3;
+                        gridCell51.StringFormat = Izquierda;
+                        gridCell51.Value = $"   Responsable: {selectedRecord.RESP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell52 = pdfGrid.Rows[28].Cells[0];
+                        gridCell52.ColumnSpan = 3;
+                        gridCell52.StringFormat = Izquierda;
+                        gridCell52.Value = $"   Controló: {selectedRecord.CONTROLO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell53 = pdfGrid.Rows[28].Cells[3];
+                        gridCell53.ColumnSpan = 3;
+                        gridCell53.StringFormat = Izquierda;
+                        gridCell53.Value = $"   POP: {selectedRecord.POP}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell54 = pdfGrid.Rows[29].Cells[0];
+                        gridCell54.ColumnSpan = 3;
+                        gridCell54.StringFormat = Izquierda;
+                        gridCell54.Value = $"   Responsable técnino: {selectedRecord.RESPTECNICO}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell55 = pdfGrid.Rows[29].Cells[3];
+                        gridCell55.ColumnSpan = 3;
+                        gridCell55.StringFormat = Izquierda;
+                        gridCell55.Value = $"   OPDS: {selectedRecord.OPDS}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell56 = pdfGrid.Rows[30].Cells[0];
+                        gridCell56.ColumnSpan = 3;
+                        gridCell56.StringFormat = Izquierda;
+                        gridCell56.Value = $"   Acta: {selectedRecord.ACTA}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell57 = pdfGrid.Rows[30].Cells[3];
+                        gridCell57.ColumnSpan = 3;
+                        gridCell57.StringFormat = Izquierda;
+                        gridCell57.Value = $"   Presencia inspector: {selectedRecord.PRESENCIAINSPEC}";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell58 = pdfGrid.Rows[31].Cells[0];
+                        gridCell58.ColumnSpan = 3;
+                        gridCell58.StringFormat = Izquierda;
+                        gridCell58.Value = "   Firma:";
+
+                        //Add RowSpan
+                        PdfGridCell gridCell59 = pdfGrid.Rows[31].Cells[3];
+                        gridCell59.ColumnSpan = 3;
+                        gridCell59.StringFormat = Izquierda;
+                        gridCell59.Value = $"   Aclaración:";
+
+                        //Draw the PdfGrid
+                        pdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 0));
 
                         //Saving the PDF to the MemoryStream
                         MemoryStream stream = new MemoryStream();
+                        document.Save(stream);
 
-                        pdfDocument.Save(stream);
+                        //Set the position as '0'
+                        stream.Position = 0;
+                        //Close the document 
+                        document.Close(true);
 
-                        pdfDocument.Close(true);
-
-                        //Download the PDF in the browser.
                         await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", stream.ToArray());
+                    }
+                }
+            }
+            if (args.Item.Text == "Prueba")
+            {
+                if (this.Grid.SelectedRecords.Count > 0)
+                {
+                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
+                    {
 
+                        PdfDocument document1 = new PdfDocument();
+                        //Create a PdfGrid
+                        PdfGrid pdfGrid1 = new PdfGrid();
+                        //Create the page
+                        PdfPage page = document1.Pages.Add();
+                        //Create PDF graphics for the page.
+                        PdfGraphics graphics = page.Graphics;
+                        //Set the standard font.
+                        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+                        //graphics.TranslateTransform(-90);
+                        PdfLightTable pdfTable = new PdfLightTable();
+                        //Subscribing to events
+                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
+                        //Draw the text.
+                        graphics.DrawString("Hello World!!!", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
+                        //PdfTemplate template = null;
+                        document1.PageSettings.Margins.All = 0;
+
+                        /*PdfTemplate template = null;
+                        template = (document1.Pages[0] as PdfPage).CreateTemplate();
+                        //Set the Orientation to Page.
+                        document1.PageSettings.Orientation = PdfPageOrientation.Landscape;
+                        //Draw the template.
+                        page.Graphics.DrawPdfTemplate(template, new Syncfusion.Drawing.PointF(0, 0));*/
+                        //Saving the PDF to the MemoryStream
+                        MemoryStream xx = new MemoryStream();
+                        document1.Save(xx);
+
+                        //Set the position as '0'
+                        xx.Position = 0;
+                        //Close the document 
+                        document1.Close(true);
+
+                        await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", xx.ToArray());
                     }
                 }
             }
@@ -537,11 +975,90 @@ namespace Servicio.Pages.Servicios
                     }
                 }
             }
+            if (args.Item.Text == "Prueba2")
+            {
+                if (this.Grid.SelectedRecords.Count > 0)
+                {
+                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
+                    {
+                        //Create an instance of PdfDocument
+                        PdfDocument document = new PdfDocument();
+                        //Add a section
+                        PdfPage page = document.Pages.Add();
+                        //Create PDF graphics for the page
+                        PdfGraphics graphics = page.Graphics;
+                        //Create a PdfLightTable
+                        PdfLightTable pdfTable = new PdfLightTable();
+                        //Subscribing to events
+                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
+                        pdfTable.EndPageLayout += PdfTable_EndPageLayout;
+                        //Create a DataTable
+                        DataTable dataTable = new DataTable();
+                        //Add columns to the DataTable
+                        dataTable.Columns.Add("OrderID");
+                        dataTable.Columns.Add("CustomerID");
+                        dataTable.Columns.Add("ShipName");
+                        dataTable.Columns.Add("ShipAddress");
+                        dataTable.Columns.Add("ShipCity");
+                        dataTable.Columns.Add("ShipPostalCode");
+                        dataTable.Columns.Add("ShipCountry");
+                        //Add rows to the DataTable
+                        dataTable.Rows.Add(new object[] { "10248", "VINET", "Vins et alcools Chevalier", "59 rue de l'Abbaye", "Reims", "51100", "France" });
+                        dataTable.Rows.Add(new object[] { "10249", "TOMSP", "Toms Spezialitäten", "Luisenstr. 48", "Münster", "44087", "Germany" });
+                        dataTable.Rows.Add(new object[] { "10250", "HANAR", "Hanari Carnes", "Rua do Paço, 67", "Rio de Janeiro", "05454-876", "Brazil" });
+                        dataTable.Rows.Add(new object[] { "10251", "VICTE", "Victuailles en stock", "2, rue du Commerce", "Lyon", "69004", "France" });
+                        dataTable.Rows.Add(new object[] { "10252", "SUPRD", "Suprêmes délices", "Boulevard Tirou, 255", "Charleroi", "B-6000", "Belgium" });
+                        dataTable.Rows.Add(new object[] { "10253", "HANAR", "Hanari Carnes", "Rua do Paço, 67", "Rio de Janeiro", "05454-876", "Brazil" });
+                        pdfTable.Style.ShowHeader = true;
+                        //Assign data source
+                        pdfTable.DataSource = dataTable;
+                        //Draw the PdfLightTable
+                        pdfTable.Draw(page, new RectangleF(50, 0, page.GetClientSize().Width, 0));
+                        MemoryStream stream = new MemoryStream();
+                        //Save the document
+                        document.Save(stream);
+                        document.Close(true);
+                        //Load a PDF document
+                        PdfLoadedDocument loadedDocument = new PdfLoadedDocument(stream);
+                        //Set the standard font
+                        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 15);
+                        //Set the format for string
+                        PdfStringFormat stringFormat = new PdfStringFormat();
+                        stringFormat.WordWrap = PdfWordWrapType.Word;
+                        string text = "We can rotate tables from an existing PDF";
+                        for (int i = 0; i < loadedDocument.Pages.Count; i++)
+                        {
+                            PdfLoadedPage lPage = loadedDocument.Pages[i] as PdfLoadedPage;
+                            PdfGraphics graphics1 = lPage.Graphics;
+                            graphics1.DrawString(text, font, PdfBrushes.Black, new RectangleF(10, 50, lPage.Size.Width - 10, 100), stringFormat);
+                        }
+                        //Save the document
+                        await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", stream.ToArray());
+                    }
+                }
+            }
         }
 
         public void Refresh()
         {
             Grid.Refresh();
+        }
+        static PdfGraphicsState state = null;
+        static PdfGraphics graphics = null;
+        private static void PdfTable_EndPageLayout(object sender, EndPageLayoutEventArgs e)
+        {
+            if (state != null && graphics != null)
+            {
+                graphics.Restore(state);
+            }
+        }
+        private static void PdfTable_BeginPageLayout(object sender, BeginPageLayoutEventArgs e)
+        {
+            PdfPage page = e.Page;
+            PdfGraphics graphics = e.Page.Graphics;
+            state = graphics.Save();
+            graphics.TranslateTransform(page.GetClientSize().Width, 0);
+            graphics.RotateTransform(90);
         }
     }
 }

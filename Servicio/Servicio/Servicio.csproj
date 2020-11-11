@@ -12,7 +12,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
-    <PackageReference Include="Spire.PDF" Version="6.11.0" />
     <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.47" />
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="18.3.0.47" />
     <PackageReference Include="Syncfusion.EJ2.Blazor" Version="18.1.0.42" />
