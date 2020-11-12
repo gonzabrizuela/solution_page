@@ -82,7 +82,7 @@ namespace Servicio.Pages.Servicios
         "Delete",
         "Print",
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba2", TooltipText = "Prueba2", PrefixIcon = "e-copy", Id = "Prueba2" },
-        new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba", TooltipText = "Prueba", PrefixIcon = "e-copy", Id = "Prueba" },
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "kd", TooltipText = "kd", PrefixIcon = "e-copy", Id = "kd" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "PdfExport", TooltipText = "PdfExport", PrefixIcon = "e-copy", Id = "PdfExport" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
@@ -921,7 +921,7 @@ namespace Servicio.Pages.Servicios
                     }
                 }
             }
-            if (args.Item.Text == "Prueba")
+            if (args.Item.Text == "kd")
             {
                 if (this.Grid.SelectedRecords.Count > 0)
                 {
@@ -937,27 +937,17 @@ namespace Servicio.Pages.Servicios
                         PdfGraphics graphics = page.Graphics;
                         //Set the standard font.
                         PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
-                        //graphics.TranslateTransform(-90);
                         PdfLightTable pdfTable = new PdfLightTable();
-                        //Subscribing to events
-                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
+                        page.Graphics.RotateTransform(-90);
                         //Draw the text.
-                        graphics.DrawString("Hello World!!!", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
-                        //PdfTemplate template = null;
+                        graphics.DrawString("Hello World!!!\r\ndf", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(-110, 10));
                         document1.PageSettings.Margins.All = 0;
-
-                        /*PdfTemplate template = null;
-                        template = (document1.Pages[0] as PdfPage).CreateTemplate();
-                        //Set the Orientation to Page.
-                        document1.PageSettings.Orientation = PdfPageOrientation.Landscape;
-                        //Draw the template.
-                        page.Graphics.DrawPdfTemplate(template, new Syncfusion.Drawing.PointF(0, 0));*/
-                        //Saving the PDF to the MemoryStream
+                        //PdfTemplate template = null;
                         MemoryStream xx = new MemoryStream();
                         document1.Save(xx);
 
                         //Set the position as '0'
-                        xx.Position = 0;
+                        //xx.Position = 0;
                         //Close the document 
                         document1.Close(true);
 
@@ -990,8 +980,8 @@ namespace Servicio.Pages.Servicios
                         //Create a PdfLightTable
                         PdfLightTable pdfTable = new PdfLightTable();
                         //Subscribing to events
-                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
-                        pdfTable.EndPageLayout += PdfTable_EndPageLayout;
+                        //pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
+                        //pdfTable.EndPageLayout += PdfTable_EndPageLayout;
                         //Create a DataTable
                         DataTable dataTable = new DataTable();
                         //Add columns to the DataTable
@@ -1042,23 +1032,6 @@ namespace Servicio.Pages.Servicios
         public void Refresh()
         {
             Grid.Refresh();
-        }
-        static PdfGraphicsState state = null;
-        static PdfGraphics graphics = null;
-        private static void PdfTable_EndPageLayout(object sender, EndPageLayoutEventArgs e)
-        {
-            if (state != null && graphics != null)
-            {
-                graphics.Restore(state);
-            }
-        }
-        private static void PdfTable_BeginPageLayout(object sender, BeginPageLayoutEventArgs e)
-        {
-            PdfPage page = e.Page;
-            PdfGraphics graphics = e.Page.Graphics;
-            state = graphics.Save();
-            graphics.TranslateTransform(page.GetClientSize().Width, 0);
-            graphics.RotateTransform(90);
         }
     }
 }
