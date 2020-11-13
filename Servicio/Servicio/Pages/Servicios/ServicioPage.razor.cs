@@ -82,7 +82,7 @@ namespace Servicio.Pages.Servicios
         "Delete",
         "Print",
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba2", TooltipText = "Prueba2", PrefixIcon = "e-copy", Id = "Prueba2" },
-        new Syncfusion.Blazor.Navigations.ItemModel { Text = "Prueba", TooltipText = "Prueba", PrefixIcon = "e-copy", Id = "Prueba" },
+        new Syncfusion.Blazor.Navigations.ItemModel { Text = "kd", TooltipText = "kd", PrefixIcon = "e-copy", Id = "kd" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "PdfExport", TooltipText = "PdfExport", PrefixIcon = "e-copy", Id = "PdfExport" },
         new Syncfusion.Blazor.Navigations.ItemModel { Text = "Copy", TooltipText = "Copy", PrefixIcon = "e-copy", Id = "copy" },
         "ExcelExport"
@@ -932,29 +932,13 @@ namespace Servicio.Pages.Servicios
                     }
                 }
             }
-          
+
+            
         }
 
         public void Refresh()
         {
             Grid.Refresh();
-        }
-        static PdfGraphicsState state = null;
-        static PdfGraphics graphics = null;
-        private static void PdfTable_EndPageLayout(object sender, EndPageLayoutEventArgs e)
-        {
-            if (state != null && graphics != null)
-            {
-                graphics.Restore(state);
-            }
-        }
-        private static void PdfTable_BeginPageLayout(object sender, BeginPageLayoutEventArgs e)
-        {
-            PdfPage page = e.Page;
-            PdfGraphics graphics = e.Page.Graphics;
-            state = graphics.Save();
-            graphics.TranslateTransform(page.GetClientSize().Width, 0);
-            graphics.RotateTransform(90);
         }
     }
 }
