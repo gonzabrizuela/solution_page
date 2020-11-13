@@ -921,50 +921,7 @@ namespace Servicio.Pages.Servicios
                     }
                 }
             }
-            if (args.Item.Text == "Prueba")
-            {
-                if (this.Grid.SelectedRecords.Count > 0)
-                {
-                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
-                    {
-
-                        PdfDocument document1 = new PdfDocument();
-                        //Create a PdfGrid
-                        PdfGrid pdfGrid1 = new PdfGrid();
-                        //Create the page
-                        PdfPage page = document1.Pages.Add();
-                        //Create PDF graphics for the page.
-                        PdfGraphics graphics = page.Graphics;
-                        //Set the standard font.
-                        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
-                        //graphics.TranslateTransform(-90);
-                        PdfLightTable pdfTable = new PdfLightTable();
-                        //Subscribing to events
-                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
-                        //Draw the text.
-                        graphics.DrawString("Hello World!!!", font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
-                        //PdfTemplate template = null;
-                        document1.PageSettings.Margins.All = 0;
-
-                        /*PdfTemplate template = null;
-                        template = (document1.Pages[0] as PdfPage).CreateTemplate();
-                        //Set the Orientation to Page.
-                        document1.PageSettings.Orientation = PdfPageOrientation.Landscape;
-                        //Draw the template.
-                        page.Graphics.DrawPdfTemplate(template, new Syncfusion.Drawing.PointF(0, 0));*/
-                        //Saving the PDF to the MemoryStream
-                        MemoryStream xx = new MemoryStream();
-                        document1.Save(xx);
-
-                        //Set the position as '0'
-                        xx.Position = 0;
-                        //Close the document 
-                        document1.Close(true);
-
-                        await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", xx.ToArray());
-                    }
-                }
-            }
+           
             if (args.Item.Text == "Edit")
             {
                 if (this.Grid.SelectedRecords.Count > 0)
@@ -975,68 +932,7 @@ namespace Servicio.Pages.Servicios
                     }
                 }
             }
-            if (args.Item.Text == "Prueba2")
-            {
-                if (this.Grid.SelectedRecords.Count > 0)
-                {
-                    foreach (Service selectedRecord in this.Grid.SelectedRecords)
-                    {
-                        //Create an instance of PdfDocument
-                        PdfDocument document = new PdfDocument();
-                        //Add a section
-                        PdfPage page = document.Pages.Add();
-                        //Create PDF graphics for the page
-                        PdfGraphics graphics = page.Graphics;
-                        //Create a PdfLightTable
-                        PdfLightTable pdfTable = new PdfLightTable();
-                        //Subscribing to events
-                        pdfTable.BeginPageLayout += PdfTable_BeginPageLayout;
-                        pdfTable.EndPageLayout += PdfTable_EndPageLayout;
-                        //Create a DataTable
-                        DataTable dataTable = new DataTable();
-                        //Add columns to the DataTable
-                        dataTable.Columns.Add("OrderID");
-                        dataTable.Columns.Add("CustomerID");
-                        dataTable.Columns.Add("ShipName");
-                        dataTable.Columns.Add("ShipAddress");
-                        dataTable.Columns.Add("ShipCity");
-                        dataTable.Columns.Add("ShipPostalCode");
-                        dataTable.Columns.Add("ShipCountry");
-                        //Add rows to the DataTable
-                        dataTable.Rows.Add(new object[] { "10248", "VINET", "Vins et alcools Chevalier", "59 rue de l'Abbaye", "Reims", "51100", "France" });
-                        dataTable.Rows.Add(new object[] { "10249", "TOMSP", "Toms Spezialitäten", "Luisenstr. 48", "Münster", "44087", "Germany" });
-                        dataTable.Rows.Add(new object[] { "10250", "HANAR", "Hanari Carnes", "Rua do Paço, 67", "Rio de Janeiro", "05454-876", "Brazil" });
-                        dataTable.Rows.Add(new object[] { "10251", "VICTE", "Victuailles en stock", "2, rue du Commerce", "Lyon", "69004", "France" });
-                        dataTable.Rows.Add(new object[] { "10252", "SUPRD", "Suprêmes délices", "Boulevard Tirou, 255", "Charleroi", "B-6000", "Belgium" });
-                        dataTable.Rows.Add(new object[] { "10253", "HANAR", "Hanari Carnes", "Rua do Paço, 67", "Rio de Janeiro", "05454-876", "Brazil" });
-                        pdfTable.Style.ShowHeader = true;
-                        //Assign data source
-                        pdfTable.DataSource = dataTable;
-                        //Draw the PdfLightTable
-                        pdfTable.Draw(page, new RectangleF(50, 0, page.GetClientSize().Width, 0));
-                        MemoryStream stream = new MemoryStream();
-                        //Save the document
-                        document.Save(stream);
-                        document.Close(true);
-                        //Load a PDF document
-                        PdfLoadedDocument loadedDocument = new PdfLoadedDocument(stream);
-                        //Set the standard font
-                        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 15);
-                        //Set the format for string
-                        PdfStringFormat stringFormat = new PdfStringFormat();
-                        stringFormat.WordWrap = PdfWordWrapType.Word;
-                        string text = "We can rotate tables from an existing PDF";
-                        for (int i = 0; i < loadedDocument.Pages.Count; i++)
-                        {
-                            PdfLoadedPage lPage = loadedDocument.Pages[i] as PdfLoadedPage;
-                            PdfGraphics graphics1 = lPage.Graphics;
-                            graphics1.DrawString(text, font, PdfBrushes.Black, new RectangleF(10, 50, lPage.Size.Width - 10, 100), stringFormat);
-                        }
-                        //Save the document
-                        await JS.SaveAs(selectedRecord.PEDIDO + ".pdf", stream.ToArray());
-                    }
-                }
-            }
+          
         }
 
         public void Refresh()
